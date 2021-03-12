@@ -26,7 +26,21 @@
 				<role>Developer</role>
 			</roles>
 		</developer>
+		
+		<developer>
+			<id>JesusAparicioOrtiz</id>
+			<name>Jesus Aparicio Ortiz</name>
+			<email>jesapaort@alum.us.es</email>
+			<url>https://github.com/JesusAparicioOrtiz</url>
+			<organization>PSG2-2021-G4-43</organization>
+			<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-43.git</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
 	</developers>
+	
+	
     
     
     <properties>
