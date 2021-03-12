@@ -3,17 +3,32 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
-    <version>2.2.0.BUILD-SNAPSHOT</version>
+    <groupId>es.us.psg2</groupId>
+    <artifactId>spring-petclinic.psg2.2021-G4-43</artifactId>
+    <version>1.0.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>petclinic</name>
-
+    <name>PSG2-2021-G4-43 Petclinic</name>
+	
+	<developers>
+		<developer>
+			<id>manguecor</id>
+			<name>Manuel Guerra Cordón</name>
+			<email>manguecor@alum.us.es</email>
+			<url>https://github.com/manguecor</url>
+			<organization>PSG2-2021-G4-43</organization>
+			<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-43.git</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+    
+    
     <properties>
 
         <!-- Generic properties -->
