@@ -62,6 +62,18 @@
 				<role>Developer</role>
 			</roles>
 		</developer>
+		
+		<developer>
+			<id>matbwyler</id>
+			<name>Matthew Bwye Lera</name>
+			<email>xamtehwt@gmail.com</email>
+			<url>https://github.com/Supremaciu</url>
+			<organization>PSG2-2021-G4-43</organization>
+			<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-43.git</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
 	</developers>
 	
 	
