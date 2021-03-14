@@ -74,6 +74,18 @@
 				<role>Developer</role>
 			</roles>
 		</developer>
+		
+		<developer>
+			<id>fergongar1</id>
+			<name>Fernando José González García</name>
+			<email>fergongar1@alum.us.es</email>
+			<url>https://github.com/fergongar1</url>
+			<organization>PSG2-2021-G4-43</organization>
+			<organizationUrl>https://github.com/gii-is-psg2/PSG2-2021-G4-43.git</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
 	</developers>
 	
 	
