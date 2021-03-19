@@ -1,7 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -15,4 +18,7 @@ public class Room extends BaseEntity {
 
 	@JoinColumn(name = "pet_id")
 	private Pet pet;
+	
+	@OneToMany
+	private Set<Book> books;
 }

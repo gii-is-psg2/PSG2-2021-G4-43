@@ -60,7 +60,7 @@ public class BookController {
 			model.addAttribute("message",errores);
 			return "books/CreateBookForm";
 		} else {
-			if(!roomService.habitacionLibre()) {
+			if(!roomService.habitacionLibre(book.getArrival_date(),book.getDeparture_date())) {
 				model.addAttribute("message","Lo sentimos, no tenemos una habitación libre en la fecha indicada.");
 				return "books/CreateBookForm";
 			}

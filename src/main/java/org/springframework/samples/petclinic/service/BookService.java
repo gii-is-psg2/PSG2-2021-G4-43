@@ -38,7 +38,8 @@ public class BookService {
 	public void save(Book book) {
 		Optional<User> user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
 		book.setUser(user.get());
-		book.setRoom(roomService.getHabitacionLibre(book.getPet()));
+		book.setRoom(roomService.getHabitacionLibre(book.getArrival_date(),book.getDeparture_date(),book.getPet()));
+		roomService.updateReservasHabitacion(book.getRoom(), book);
 		bookRepository.save(book);
 	}
 	
