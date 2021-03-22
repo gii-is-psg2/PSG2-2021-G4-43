@@ -5,9 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Book;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.BookRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +17,6 @@ public class BookService {
 	
 	@Autowired
 	private RoomService roomService;
-	
-	@Autowired
-	private UserService userService;
 
 
 	@Transactional(readOnly = true)
@@ -36,22 +31,22 @@ public class BookService {
 	
 	@Transactional
 	public void save(Book book) {
-		Optional<User> user = userService.findUser(SecurityContextHolder.getContext().getAuthentication().getName());
-		book.setUser(user.get());
-		book.setRoom(roomService.getHabitacionLibre(book.getArrival_date(),book.getDeparture_date(),book.getPet()));
-		roomService.updateReservasHabitacion(book.getRoom(), book);
+		book.setRoom(roomService.getHabitacionLibre(book.getArrival_date(),book.getDeparture_date(),book.getPet()).get());
 		bookRepository.save(book);
 	}
 	
 	@Transactional(readOnly = true)
-	public Collection<Book> findAllByAlumno(String username){
-		return bookRepository.findAllByUserId(username);
+	public Collection<Book> findAllByOwner(String username){
+		return bookRepository.findAllByOwner(username);
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Book> findAllByRoomId(int id){
+		return bookRepository.findAllByRoomId(id);
 	}
 	
 	@Transactional
 	public void delete(int id) {
-		Optional<Book> book = findById(id);
-		roomService.updateHabitacion(book.get().getRoom(),book.get().getPet());
 		bookRepository.delete(id);
 	}
 

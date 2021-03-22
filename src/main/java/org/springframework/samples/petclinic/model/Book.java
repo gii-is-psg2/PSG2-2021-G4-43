@@ -21,14 +21,14 @@ public class Book extends BaseEntity {
 
 	@NotNull(message="El campo Fecha de inicio no puede estar vacío")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate arrival_date;
+	private LocalDate arrival_date; //Fecha con hora?
 	
 	@NotNull(message="El campo Fecha de fin no puede estar vacío")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate departure_date;
 	
-	@JoinColumn(name = "user_id")
-	private User user;
+	//@JoinColumn(name = "owner_id")
+	//private Owner owner;
 
 	@NotNull(message="Debe seleccionar una mascota")
 	@ManyToOne

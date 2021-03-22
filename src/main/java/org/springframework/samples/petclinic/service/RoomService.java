@@ -17,6 +17,9 @@ public class RoomService {
 
 	@Autowired
 	private RoomRepository roomRepository;
+	
+	@Autowired
+	private BookService bookService;
 
 
 	@Transactional(readOnly = true)
@@ -34,41 +37,19 @@ public class RoomService {
 		roomRepository.save(room);
 	}
 	
-	public Boolean habitacionLibre(LocalDate arrival, LocalDate departure){
+	public Optional<Room> getHabitacionLibre(LocalDate arrival, LocalDate departure,Pet pet){
 		for(Room r : findAll()) {
-			for(Book b : r.getBooks()) {
-				if(arrival.isAfter(b.getArrival_date()) && arrival.isBefore(b.getDeparture_date()) 
-						|| departure.isAfter(b.getArrival_date()) && departure.isBefore(b.getDeparture_date())) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	public void updateHabitacion(Room room,Pet pet) {
-		room.setPet(pet);
-		save(room);
-	}
-	
-	public void updateReservasHabitacion(Room room,Book book) {
-		room.getBooks().add(book);
-		save(room);
-	}
-	
-	public Room getHabitacionLibre(LocalDate arrival, LocalDate departure,Pet pet){
-		for(Room r : findAll()) {
-			Boolean aux = true;
-			for(Book b : r.getBooks()) {
-				if(arrival.isAfter(b.getArrival_date()) && arrival.isBefore(b.getDeparture_date()) 
-						|| departure.isAfter(b.getArrival_date()) && departure.isBefore(b.getDeparture_date())) {
-					aux = false;
+			Boolean libre = false;
+			for(Book b : bookService.findAllByRoomId(r.getId())) {
+				if(!(arrival.isAfter(b.getArrival_date()) && arrival.isBefore(b.getDeparture_date()) 
+						|| departure.isAfter(b.getArrival_date()) && departure.isBefore(b.getDeparture_date())
+						|| arrival.isBefore(b.getArrival_date()) && departure.isAfter(b.getDeparture_date()))) {
+					libre = true;
 					break;
 				}
 			}
-			if(aux==true) {
-				updateHabitacion(r,pet);
-				return r;
+			if(libre==true) {
+				return Optional.of(r);
 			}
 		}
 		return null;

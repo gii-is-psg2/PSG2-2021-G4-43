@@ -17,8 +17,11 @@ public interface BookRepository extends Repository<Book, Integer>{
 	
 	void save(Book book) throws DataAccessException;
 	
-	@Query("SELECT DISTINCT b FROM Book b WHERE b.user_id LIKE :username")
-	Collection<Book> findAllByUserId(@Param("username") String username) throws DataAccessException;
+	@Query("SELECT DISTINCT b FROM Book b WHERE b.pet.owner_id LIKE :username")
+	Collection<Book> findAllByOwner(@Param("username") String username) throws DataAccessException;
+	
+	@Query("SELECT DISTINCT b FROM Book b WHERE b.room.id LIKE :id")
+	Collection<Book> findAllByRoomId(@Param("id") int id) throws DataAccessException;
 	
 	void delete(int id);
 	
