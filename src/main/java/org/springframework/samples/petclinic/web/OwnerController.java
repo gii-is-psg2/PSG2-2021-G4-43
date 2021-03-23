@@ -22,6 +22,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.VetService;
@@ -127,6 +128,14 @@ public class OwnerController {
 			this.ownerService.saveOwner(owner);
 			return "redirect:/owners/{ownerId}";
 		}
+	}
+	
+	@GetMapping("/owners/{ownerId}/delete")
+	public String deleteOwner(@PathVariable("ownerId") int ownerId, Model model){
+			Owner owner = ownerService.findOwnerById(ownerId);
+			ownerService.deleteOwner(owner);
+			model.addAttribute("message", "OWNER BORRADO CON EXITO");
+			return "redirect:/owners/find";
 	}
 
 	/**
