@@ -86,7 +86,6 @@ public class OwnerService {
 	
 	@Transactional
 	public void deleteOwner(Owner owner) throws DataAccessException {
-		//owner.removePet(owner.getPets());
 		ownerRepository.delete(owner);
 	}
 

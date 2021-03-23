@@ -22,6 +22,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 
@@ -47,8 +48,10 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 
 	List<Visit> findByPetId(Integer petId);
 	
-	@Query("SELECT visit FROM Visit visit WHERE visit.id =:id")
-	public Visit findVisitById(@Param("id") int id);
+	/*@Query("SELECT visit FROM Visit visit WHERE visit.id =:id")
+	public Visit findVisitById(@Param("id") int id);*/
+	
+	Visit findById(int id) throws DataAccessException;
 	
 	void delete(Visit visit) throws DataAccessException;
 }

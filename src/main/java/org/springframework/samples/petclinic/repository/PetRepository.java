@@ -20,7 +20,9 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 
@@ -46,6 +48,8 @@ public interface PetRepository extends Repository<Pet, Integer> {
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */
 	Pet findById(int id) throws DataAccessException;
+	//@Query("SELECT pet FROM Pet pet WHERE pet.id =:id")
+	//public Pet findById(@Param("id") int id);
 
 	/**
 	 * Save a <code>Pet</code> to the data store, either inserting or updating it.
@@ -53,5 +57,7 @@ public interface PetRepository extends Repository<Pet, Integer> {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Pet pet) throws DataAccessException;
+	
+	void delete(Pet pet) throws DataAccessException;
 
 }

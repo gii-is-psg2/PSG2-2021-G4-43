@@ -25,6 +25,7 @@ import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -88,6 +89,23 @@ public class VisitController {
 	public String showVisits(@PathVariable int petId, Map<String, Object> model) {
 		model.put("visits", this.petService.findPetById(petId).getVisits());
 		return "visitList";
+	}
+	
+	
+	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/delete")
+	public String deletePet(@PathVariable("petId") int petId,ModelMap model){
+    	Pet pet = this.petService.findPetById(petId);
+    	petService.deletePet(pet);
+		model.addAttribute("message", "PET BORRADO CON EXITO");
+		return "redirect:/owners/{ownerId}";
+	}
+	
+	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete")
+	public String deleteVisit(@PathVariable("visitId") int visitId,ModelMap model){
+    	Visit visit = this.petService.findVisitByVisitId(visitId);
+    	petService.deleteVisit(visit);
+		model.addAttribute("message", "VISITA BORRADA CON EXITO");
+		return "redirect:/owners/{ownerId}";
 	}
 
 }

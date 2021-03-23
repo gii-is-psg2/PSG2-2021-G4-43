@@ -81,10 +81,18 @@ public class PetService {
 		return visitRepository.findByPetId(petId);
 	}
 	
-	/*@Transactional
-	public void deletePet(List<Pet> pet) throws DataAccessException {
-		visitRepository.delete(pet.getVisits());
+	@Transactional
+	public void deletePet(Pet pet) throws DataAccessException {
 		petRepository.delete(pet);
-	}*/
+	}
+	
+	public Visit findVisitByVisitId(int visitId) {
+		return visitRepository.findById(visitId);
+	}
+	
+	@Transactional
+	public void deleteVisit(Visit visit) throws DataAccessException {
+		visitRepository.delete(visit);
+	}
 
 }
