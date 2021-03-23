@@ -73,7 +73,10 @@ public class PetService {
             }else
                 petRepository.save(pet);                
 	}
-
+	
+	public Collection<Pet> findPetsByOwner(String username) {
+		return petRepository.findPetsByOwner(username);
+	}
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);

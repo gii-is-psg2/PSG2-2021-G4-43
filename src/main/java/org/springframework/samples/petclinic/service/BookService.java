@@ -31,7 +31,7 @@ public class BookService {
 	
 	@Transactional
 	public void save(Book book) {
-		book.setRoom(roomService.getHabitacionLibre(book.getArrival_date(),book.getDeparture_date(),book.getPet()).get());
+		book.setRoom(roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet()).get());
 		bookRepository.save(book);
 	}
 	
@@ -46,8 +46,8 @@ public class BookService {
 	}
 	
 	@Transactional
-	public void delete(int id) {
-		bookRepository.delete(id);
+	public void delete(Book book) {
+		bookRepository.delete(book);
 	}
 
 }

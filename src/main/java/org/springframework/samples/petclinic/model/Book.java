@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,11 +22,13 @@ public class Book extends BaseEntity {
 
 	@NotNull(message="El campo Fecha de inicio no puede estar vacío")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate arrival_date; //Fecha con hora?
+	@Column(name="arrival_date")
+	private LocalDate arrivalDate; //Fecha con hora?
 	
 	@NotNull(message="El campo Fecha de fin no puede estar vacío")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate departure_date;
+	@Column(name="departure_date")
+	private LocalDate departureDate;
 	
 	//@JoinColumn(name = "owner_id")
 	//private Owner owner;

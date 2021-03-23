@@ -15,7 +15,7 @@ public interface RoomRepository extends Repository<Room, Integer>{
 	
 	void save(Room room) throws DataAccessException;
 	
-	void delete(int id);
+	void delete(Room room);
 	
 	
 }

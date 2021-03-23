@@ -41,9 +41,9 @@ public class RoomService {
 		for(Room r : findAll()) {
 			Boolean libre = false;
 			for(Book b : bookService.findAllByRoomId(r.getId())) {
-				if(!(arrival.isAfter(b.getArrival_date()) && arrival.isBefore(b.getDeparture_date()) 
-						|| departure.isAfter(b.getArrival_date()) && departure.isBefore(b.getDeparture_date())
-						|| arrival.isBefore(b.getArrival_date()) && departure.isAfter(b.getDeparture_date()))) {
+				if(!(arrival.isAfter(b.getArrivalDate()) && arrival.isBefore(b.getDepartureDate()) 
+						|| departure.isAfter(b.getArrivalDate()) && departure.isBefore(b.getDepartureDate())
+						|| arrival.isBefore(b.getArrivalDate()) && departure.isAfter(b.getDepartureDate()))) {
 					libre = true;
 					break;
 				}
@@ -57,8 +57,8 @@ public class RoomService {
 	
 
 	@Transactional
-	public void delete(int id) {
-		roomRepository.delete(id);
+	public void delete(Room room) {
+		roomRepository.delete(room);
 	}
 
 }

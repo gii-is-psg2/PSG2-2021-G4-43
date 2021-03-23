@@ -14,8 +14,8 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.service.BookService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.RoomService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,14 +36,14 @@ public class BookController {
 	private RoomService roomService;
 	
 	@Autowired
-	private UserService userService;
+	private PetService petService;
 	
 	@Autowired
 	private OwnerService ownerService;
 	
 	@GetMapping()
 	public String listBooks(ModelMap model) {
-		Optional<Owner> owner = userService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+		Optional<Owner> owner = ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName());
 		Collection<Book> books = bookService.findAllByOwner(owner.get().getUser().getUsername());
 		model.addAttribute("book",books);
 		return "books/listBooks";
@@ -52,8 +52,8 @@ public class BookController {
 	@GetMapping("/new")
 	public String initCreationBookForm(ModelMap model) {
 		Book book = new Book();
-		Optional<Owner> owner = userService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName());
-		Collection<Pet> pets = ownerService.findPetsByOwner(owner.get().getUser().getUsername());
+		Optional<Owner> owner = ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+		Collection<Pet> pets = petService.findPetsByOwner(owner.get().getUser().getUsername());
 		model.addAttribute("book",book);
 		model.addAttribute("pets",pets);
 		return "books/CreateBookForm";
@@ -66,7 +66,7 @@ public class BookController {
 			model.addAttribute("message",errores);
 			return "books/CreateBookForm";
 		} else {
-			Optional<Room> room = roomService.getHabitacionLibre(book.getArrival_date(),book.getDeparture_date(),book.getPet());
+			Optional<Room> room = roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet());
 			if(!room.isPresent()) {
 				model.addAttribute("message","Lo sentimos, no tenemos una habitación libre en la fecha indicada.");
 				return "books/CreateBookForm";
@@ -84,7 +84,7 @@ public class BookController {
 			model.addAttribute("message","La reserva que intenta borrar no existe.");
 			return listBooks(model);
 		}
-		bookService.delete(book.get().getId());
+		bookService.delete(book.get());
 		model.addAttribute("message","La reserva se ha cancelado con exito");
 		return listBooks(model);
 	}

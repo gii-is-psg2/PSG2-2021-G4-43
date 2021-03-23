@@ -16,11 +16,11 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +56,10 @@ public class OwnerService {
 	public Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException {
 		return ownerRepository.findByLastName(lastName);
 	}
+	
+	public Optional<Owner> findOwner(String username) {
+		return ownerRepository.findOwner(username);
+	}
 
 	@Transactional
 	public void saveOwner(Owner owner) throws DataAccessException {
@@ -65,10 +69,6 @@ public class OwnerService {
 		userService.saveUser(owner.getUser());
 		//creating authorities
 		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
-	}
-	
-	public Collection<Pet> findPetsByOwner(String username) {
-		return ownerRepository.findPetsByOwner(username);
 	}
 
 }
