@@ -16,7 +16,7 @@
     <jsp:body>
         <h2><c:if test="${visit['new']}">Nueva </c:if>Visita</h2>
 
-        <b>Pet</b>
+        <b>Mascota</b>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -36,8 +36,8 @@
 
         <form:form modelAttribute="visit" class="form-horizontal">
             <div class="form-group has-feedback">
-                <petclinic:inputField label="Date" name="date"/>
-                <petclinic:inputField label="Description" name="description"/>
+                <petclinic:inputField label="Fecha" name="date"/>
+                <petclinic:inputField label="Descripción" name="description"/>
             </div>
 
             <div class="form-group">
