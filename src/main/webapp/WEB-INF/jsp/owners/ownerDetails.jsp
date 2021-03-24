@@ -101,7 +101,7 @@
                                 </spring:url>
                                 <a href="${fn:escapeXml(petDeleteUrl)}">Delete Pet</a>
                             </td>
-                            <td>
+                            <!--  <td>
                             <c:forEach var="visit" items="${pet.visits}">	
                             	<spring:url value="/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete" var="visitDeleteUrl">
                                     <spring:param name="ownerId" value="${owner.id}"/>
@@ -110,7 +110,7 @@
                                 </spring:url>
                                 <a href="${fn:escapeXml(visitDeleteUrl)}">Delete Visit</a>
                             </c:forEach>
-                            </td>
+                            </td>-->
                         </tr>
                         
                     </table>
