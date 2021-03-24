@@ -20,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -46,6 +47,9 @@ class OwnerControllerTests {
 
 	@MockBean
 	private OwnerService clinicService;
+	
+	@MockBean
+	private PetService petService;
         
         @MockBean
 	private UserService userService;
@@ -183,10 +187,10 @@ class OwnerControllerTests {
         @WithMockUser(value = "spring")
 	@Test
 	void testProcessDeleteOwner() throws Exception {
-		mockMvc.perform(post("/owners/{ownerId}/delete", TEST_OWNER_ID)
+		mockMvc.perform(get("/owners/{ownerId}/delete", TEST_OWNER_ID)
 							.with(csrf()))
 				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/owners/{ownerId}"));
+				.andExpect(view().name("redirect:/owners/find"));
 	}
 
         @WithMockUser(value = "spring")

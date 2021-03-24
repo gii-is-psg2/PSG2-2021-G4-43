@@ -83,10 +83,10 @@ class VetControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testProcessDeleteVet() throws Exception {
-		mockMvc.perform(post("/vets/{vetId}/delete", TEST_VET_ID)
-							.with(csrf()))
-		.andExpect(status().isOk())
-		.andExpect(view().name("vets"));
+		mockMvc.perform(get("/vets/{vetId}/delete", TEST_VET_ID)
+							.with(csrf()))                             
+        .andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/vets"));
 	}
 
 }
