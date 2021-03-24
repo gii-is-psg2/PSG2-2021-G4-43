@@ -39,12 +39,12 @@ public class RoomService {
 	
 	public Optional<Room> getHabitacionLibre(LocalDate arrival, LocalDate departure,Pet pet){
 		for(Room r : findAll()) {
-			Boolean libre = false;
+			Boolean libre = true;
 			for(Book b : bookService.findAllByRoomId(r.getId())) {
-				if(!(arrival.isAfter(b.getArrivalDate()) && arrival.isBefore(b.getDepartureDate()) 
+				if((arrival.isAfter(b.getArrivalDate()) && arrival.isBefore(b.getDepartureDate()) 
 						|| departure.isAfter(b.getArrivalDate()) && departure.isBefore(b.getDepartureDate())
 						|| arrival.isBefore(b.getArrivalDate()) && departure.isAfter(b.getDepartureDate()))) {
-					libre = true;
+					libre = false;
 					break;
 				}
 			}
@@ -52,7 +52,7 @@ public class RoomService {
 				return Optional.of(r);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 	
 

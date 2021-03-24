@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Book;
+import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.repository.BookRepository;
+import org.springframework.samples.petclinic.service.exceptions.NoRoomAvailableException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +32,15 @@ public class BookService {
 	}
 	
 	@Transactional
-	public void save(Book book) {
-		book.setRoom(roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet()).get());
-		bookRepository.save(book);
+	public void save(Book book) throws NoRoomAvailableException {
+		Optional<Room> room = roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet());
+		if(!room.isPresent()) {
+			throw new NoRoomAvailableException();
+		}
+		else {
+			book.setRoom(roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet()).get());
+			bookRepository.save(book);
+		}
 	}
 	
 	@Transactional(readOnly = true)

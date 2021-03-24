@@ -60,7 +60,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	public Owner findById(@Param("id") int id);
 
-	@Query("SELECT DISTINCT o FROM Owner o WHERE o.user.username LIKE :username")
+	@Query("SELECT MAX(o) FROM Owner o WHERE o.user.username LIKE :username")
 	Optional<Owner> findOwner(@Param("username") String username) throws DataAccessException;
 
 }
