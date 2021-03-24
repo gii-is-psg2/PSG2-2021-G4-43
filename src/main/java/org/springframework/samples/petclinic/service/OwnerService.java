@@ -64,6 +64,11 @@ public class OwnerService {
 		this.ownerRepository = ownerRepository;
 	}	
 
+	@Transactional(readOnly = true)	
+	public Collection<Owner> findOwners() throws DataAccessException {
+		return ownerRepository.findAll();
+	}
+
 	@Transactional(readOnly = true)
 	public Owner findOwnerById(int id) throws DataAccessException {
 		return ownerRepository.findById(id);

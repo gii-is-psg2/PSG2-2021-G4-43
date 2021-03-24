@@ -182,6 +182,15 @@ class OwnerControllerTests {
 
         @WithMockUser(value = "spring")
 	@Test
+	void testProcessDeleteOwner() throws Exception {
+		mockMvc.perform(post("/owners/{ownerId}/delete", TEST_OWNER_ID)
+							.with(csrf()))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/owners/{ownerId}"));
+	}
+
+        @WithMockUser(value = "spring")
+	@Test
 	void testShowOwner() throws Exception {
 		mockMvc.perform(get("/owners/{ownerId}", TEST_OWNER_ID)).andExpect(status().isOk())
 				.andExpect(model().attribute("owner", hasProperty("lastName", is("Franklin"))))
