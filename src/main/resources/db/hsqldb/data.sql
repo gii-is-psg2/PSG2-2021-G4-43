@@ -71,3 +71,10 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'castrado');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'esterilizado');
 
+INSERT INTO rooms(id) VALUES (1);
+INSERT INTO rooms(id) VALUES (2);
+INSERT INTO rooms(id) VALUES (3);
+
+INSERT INTO books(id,arrival_date,departure_date,pet_id,room_id) VALUES (1, '2021-01-01', '2021-01-07', 1, 1);
+INSERT INTO books(id,arrival_date,departure_date,pet_id,room_id) VALUES (2, '2021-01-02', '2021-01-09', 3, 2);
+

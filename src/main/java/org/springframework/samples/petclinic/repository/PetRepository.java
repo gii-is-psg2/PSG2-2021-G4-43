@@ -64,4 +64,6 @@ public interface PetRepository extends Repository<Pet, Integer> {
 	
 	void delete(Pet pet) throws DataAccessException;
 
+	@Query("SELECT DISTINCT p FROM Pet p WHERE p.owner.user.username LIKE :username")
+	Collection<Pet> findPetsByOwner(@Param("username") String username) throws DataAccessException;
 }
