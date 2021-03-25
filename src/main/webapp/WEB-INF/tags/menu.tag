@@ -75,6 +75,12 @@
 											<p class="text-left">
 												<strong><sec:authentication property="name" /></strong>
 											</p>
+											<sec:authorize access="hasAuthority('owner')">
+												<p class="text-left">
+													<a href="<c:url value="/books" />"
+													class="btn btn-primary btn-block btn-sm">Reservas</a>
+												</p>
+											</sec:authorize>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
 													class="btn btn-primary btn-block btn-sm">Logout</a>

@@ -41,9 +41,11 @@ public class RoomService {
 		for(Room r : findAll()) {
 			Boolean libre = true;
 			for(Book b : bookService.findAllByRoomId(r.getId())) {
-				if((arrival.isAfter(b.getArrivalDate()) && arrival.isBefore(b.getDepartureDate()) 
-						|| departure.isAfter(b.getArrivalDate()) && departure.isBefore(b.getDepartureDate())
-						|| arrival.isBefore(b.getArrivalDate()) && departure.isAfter(b.getDepartureDate()))) {
+				if( (arrival.isAfter(b.getArrivalDate()) && arrival.isBefore(b.getDepartureDate()))
+					|| (departure.isAfter(b.getArrivalDate()) && departure.isBefore(b.getDepartureDate()))
+					|| (arrival.isBefore(b.getArrivalDate()) && departure.isAfter(b.getDepartureDate()))
+					|| arrival.isEqual(b.getArrivalDate()) || arrival.isEqual(b.getDepartureDate())
+					|| departure.isEqual(b.getArrivalDate()) || departure.isEqual(b.getDepartureDate())) {
 					libre = false;
 					break;
 				}

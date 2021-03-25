@@ -20,7 +20,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,11 @@ public class BookController {
 	
 	@Autowired
 	private OwnerService ownerService;
+	
+	@InitBinder("book")
+	public void initBookBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(new BookValidator());
+	}
 	
 	@GetMapping()
 	public String listBooks(ModelMap model) {
@@ -71,7 +78,7 @@ public class BookController {
 		} else {
 			try {
 				bookService.save(book);
-				model.addAttribute("message","La reserva se ha realizado con exito");
+				model.addAttribute("message","La reserva se ha realizado con éxito.");
 				return listBooks(model);
 			} catch (NoRoomAvailableException e) {
 				model.addAttribute("message","Lo sentimos, no tenemos una habitación libre en la fecha indicada.");
