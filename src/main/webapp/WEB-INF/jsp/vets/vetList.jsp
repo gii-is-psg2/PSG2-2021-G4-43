@@ -1,17 +1,22 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 
 <petclinic:layout pageName="vets">
-    <h2>Veterinarians</h2>
+    <h2>Veterinarios</h2>
 
     <table id="vetsTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Specialties</th>
+            <th>Nombre</th>
+            <th>Especialidades</th>
+            <th>Detalles del veterinario</th>
         </tr>
         </thead>
         <tbody>
@@ -24,8 +29,16 @@
                     <c:forEach var="specialty" items="${vet.specialties}">
                         <c:out value="${specialty.name} "/>
                     </c:forEach>
-                    <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
+                    <c:if test="${vet.nrOfSpecialties == 0}">ninguna</c:if>
                 </td>
+                <td>
+                <sec:authorize access="hasAuthority('admin')">
+						<spring:url value="vets/{vetId}" var="VetUrl">
+        					<spring:param name="vetId" value="${vet.id}"/>
+    					</spring:url>
+    					<a href="${fn:escapeXml(VetUrl)}" class="btn btn-default">Vet Details</a>
+		 		</sec:authorize>
+		 		</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -34,7 +47,7 @@
     <table class="table-buttons">
         <tr>
             <td>
-                <a href="<spring:url value="/vets.xml" htmlEscape="true" />">View as XML</a>
+                <a href="<spring:url value="/vets.xml" htmlEscape="true" />">Ver como XML</a>
             </td>            
         </tr>
     </table>

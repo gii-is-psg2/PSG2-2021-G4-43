@@ -16,11 +16,14 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetRepository;
 import org.springframework.samples.petclinic.repository.VisitRepository;
@@ -48,6 +51,11 @@ public class PetService {
 			VisitRepository visitRepository) {
 		this.petRepository = petRepository;
 		this.visitRepository = visitRepository;
+	}
+
+	@Transactional(readOnly = true)	
+	public Collection<Pet> findPets() throws DataAccessException {
+		return petRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)
@@ -80,6 +88,20 @@ public class PetService {
 
 	public Collection<Visit> findVisitsByPetId(int petId) {
 		return visitRepository.findByPetId(petId);
+	}
+	
+	@Transactional
+	public void deletePet(Pet pet) throws DataAccessException {
+		petRepository.delete(pet);
+	}
+	
+	public Visit findVisitByVisitId(int visitId) {
+		return visitRepository.findById(visitId);
+	}
+	
+	@Transactional
+	public void deleteVisit(Visit visit) throws DataAccessException {
+		visitRepository.delete(visit);
 	}
 
 }
