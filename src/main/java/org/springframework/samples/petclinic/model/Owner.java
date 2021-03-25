@@ -42,6 +42,7 @@ import org.springframework.core.style.ToStringCreator;
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
+ *
  */
 @Entity
 @Table(name = "owners")
@@ -126,6 +127,7 @@ public class Owner extends Person {
 	public boolean removePet(Pet pet) {
 		return getPetsInternal().remove(pet);
 	}
+	
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.

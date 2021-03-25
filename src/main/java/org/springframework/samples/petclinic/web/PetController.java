@@ -21,6 +21,7 @@ import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.VetService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -108,7 +109,7 @@ public class PetController {
                     	owner.addPet(pet);
                     	this.petService.savePet(pet);
                     }catch(DuplicatedPetNameException ex){
-                        result.rejectValue("name", "duplicate", "already exists");
+                        result.rejectValue("name", "duplicate", "ya existe");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
                     return "redirect:/owners/{ownerId}";
@@ -144,11 +145,10 @@ public class PetController {
                     try {                    
                         this.petService.savePet(petToUpdate);                    
                     } catch (DuplicatedPetNameException ex) {
-                        result.rejectValue("name", "duplicate", "already exists");
+                        result.rejectValue("name", "duplicate", "ya existe");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
 			return "redirect:/owners/{ownerId}";
 		}
 	}
-
 }

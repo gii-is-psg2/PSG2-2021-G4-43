@@ -22,7 +22,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -32,6 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 		excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 		excludeAutoConfiguration= SecurityConfiguration.class)
 class VetControllerTests {
+
+	private static final int TEST_VET_ID = 1;
 
 	@Autowired
 	private VetController vetController;
@@ -73,6 +78,15 @@ class VetControllerTests {
 		mockMvc.perform(get("/vets.xml").accept(MediaType.APPLICATION_XML)).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
 				.andExpect(content().node(hasXPath("/vets/vetList[id=1]/id")));
+	}
+
+    @WithMockUser(value = "spring")
+	@Test
+	void testProcessDeleteVet() throws Exception {
+		mockMvc.perform(get("/vets/{vetId}/delete", TEST_VET_ID)
+							.with(csrf()))                             
+        .andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/vets"));
 	}
 
 }

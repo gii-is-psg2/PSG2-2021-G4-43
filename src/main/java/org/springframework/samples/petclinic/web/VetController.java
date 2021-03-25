@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.Map;
 
 /**
  * @author Juergen Hoeller
@@ -127,7 +128,15 @@ public class VetController {
 	public ModelAndView showVet(ModelMap model, @PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("vets/vetDetails");
 		mav.addObject(this.vetService.findVetById(id));
-		return mav;
+    return mav;
+	}
+
+	@GetMapping("/vets/{vetId}/delete")
+	public String deleteVet(@PathVariable("vetId") int vetId, Model model){
+			Vet vet = vetService.findVetById(vetId);
+			vetService.deleteVet(vet);
+			model.addAttribute("message", "VETERINARIO BORRADO CON EXITO");
+			return "redirect:/vets";
 	}
 
 }

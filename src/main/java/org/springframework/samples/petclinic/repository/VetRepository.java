@@ -43,6 +43,7 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	 */
 	Collection<Vet> findAll() throws DataAccessException;
 	
+
 	void save(Vet vet) throws DataAccessException;
 	
 	@Query("SELECT vet FROM Vet vet left join fetch vet.specialties WHERE vet.id =:id")
@@ -50,5 +51,10 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	
 	@Query("SELECT specialty FROM Specialty specialty")
 	public Collection<Specialty> findSpecialty();
+
+	void delete(Vet vet) throws DataAccessException;
+	
+	@Query("SELECT vet FROM Vet vet left join fetch vet.specialties WHERE vet.id =:id")
+	public Vet findById(@Param("id") int id);
 
 }

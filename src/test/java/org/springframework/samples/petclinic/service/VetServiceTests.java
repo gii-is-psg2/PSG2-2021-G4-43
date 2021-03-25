@@ -123,5 +123,17 @@ class VetServiceTests {
 		assertThat(vet.getFirstName()).isEqualTo("Will");
 	}
 
+	@Test
+	@Transactional
+	void shouldDeleteVet() {
+		Vet vet = this.vetService.findVetById(1);
+		Collection<Vet> vets = vetService.findVets();
+		int i = vets.size();
+		vetService.deleteVet(vet);
+		vets = vetService.findVets();
+		int j = vets.size();
+		assertThat(i-1).isEqualTo(j);
+	}
+
 
 }

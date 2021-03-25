@@ -30,4 +30,9 @@
     </spring:url>
     <a href="${fn:escapeXml(editVetUrl)}" class="btn btn-default">Edit Vet</a>
 
-</petclinic:layout>
+    <spring:url value="{vetId}/delete" var="deleteVetUrl">
+        <spring:param name="vetId" value="${vet.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(deleteVetUrl)}" class="btn btn-default">Delete Vet</a>
+
+</petclinic:layout>¡
