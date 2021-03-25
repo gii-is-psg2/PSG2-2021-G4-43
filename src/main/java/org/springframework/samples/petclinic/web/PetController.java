@@ -109,7 +109,7 @@ public class PetController {
                     	owner.addPet(pet);
                     	this.petService.savePet(pet);
                     }catch(DuplicatedPetNameException ex){
-                        result.rejectValue("name", "duplicate", "already exists");
+                        result.rejectValue("name", "duplicate", "ya existe");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
                     return "redirect:/owners/{ownerId}";
@@ -145,7 +145,7 @@ public class PetController {
                     try {                    
                         this.petService.savePet(petToUpdate);                    
                     } catch (DuplicatedPetNameException ex) {
-                        result.rejectValue("name", "duplicate", "already exists");
+                        result.rejectValue("name", "duplicate", "ya existe");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
 			return "redirect:/owners/{ownerId}";
