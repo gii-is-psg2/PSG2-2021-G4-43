@@ -82,4 +82,12 @@ class VisitControllerTests {
 				.andExpect(model().attributeExists("visits")).andExpect(view().name("visitList"));
 	}
 
+	@WithMockUser(value = "spring")
+        @Test
+	void testProcessDeletePet() throws Exception {
+		mockMvc.perform(get("/owners/*/pets/{petId}/visits/delete", TEST_PET_ID))                              
+        .andExpect(status().is3xxRedirection())
+		.andExpect(view().name("redirect:/owners/{ownerId}"));
+	}
+
 }
