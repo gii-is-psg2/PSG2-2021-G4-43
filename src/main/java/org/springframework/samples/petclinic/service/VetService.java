@@ -59,6 +59,8 @@ public class VetService {
 	
 	@Transactional
 	public void saveVet(Vet vet) throws DataAccessException {
+
+		System.out.println("hoka");
 		vetRepository.save(vet);
 		/*userService.saveUser(vet.getUser());
 		authoritiesService.saveAuthorities(vet.getUser().getUsername(), "vet");*/

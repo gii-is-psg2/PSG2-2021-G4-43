@@ -14,9 +14,13 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="First Name" name="firstName"/>
             <petclinic:inputField label="Last Name" name="lastName"/>
-            <div class="control-group">
-                    <petclinic:selectField name="specialties" label="Specialties " names="${specialties}" size="3"/>
-            </div>
+            <div class="formGroup">
+				<div class="col-sm-10">
+					<label>Specialties:</label>
+					<form:checkboxes items="${specialties}" path="specialties"
+							delimiter="&nbsp;&nbsp;&nbsp;" itemLabel="name" style="border:10px;" />
+				</div>
+			</div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

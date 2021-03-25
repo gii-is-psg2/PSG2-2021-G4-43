@@ -19,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +33,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.User;
@@ -72,11 +75,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Dave Syer
  */
 
-/*@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 class VetServiceTests {
 
 	@Autowired
 	protected VetService vetService;	
+	
+	@Autowired
+	protected SpecialtyService specialtyService;
 
 	@Test
 	void shouldFindVets() {
@@ -85,9 +91,37 @@ class VetServiceTests {
 		Vet vet = EntityUtils.getById(vets, Vet.class, 3);
 		assertThat(vet.getLastName()).isEqualTo("Douglas");
 		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
-		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
-		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+	}
+	
+	@Test
+	void shouldCreateVet() {
+		
+		Set<Specialty> specialties = new HashSet<Specialty>();
+		specialties.add(this.specialtyService.findById(1).get());
+		specialties.add(this.specialtyService.findById(2).get());
+		
+		Vet vet = new Vet();
+		vet.setId(8);
+		vet.setFirstName("Jack");
+		vet.setLastName("Daniels");
+		vet.setSpecialties(specialties);
+		
+		int numeroVets = vetService.findVets().size();
+		vetService.saveVet(vet);
+		int numeroVetsFinal = vetService.findVets().size();
+		
+		assertThat(numeroVets+1).isEqualTo(numeroVetsFinal);
+	}
+	
+	@Test
+	void shouldEditVet() {
+		
+		Vet vet = vetService.findVetById(1);
+		assertThat(vet.getFirstName()).isEqualTo("James");
+		vet.setFirstName("Will");
+		vetService.saveVet(vet);
+		assertThat(vet.getFirstName()).isEqualTo("Will");
 	}
 
 
-}*/
+}
