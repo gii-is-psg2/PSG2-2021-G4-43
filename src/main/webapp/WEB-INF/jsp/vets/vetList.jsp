@@ -39,7 +39,7 @@
 						<spring:url value="vets/{vetId}" var="VetUrl">
         					<spring:param name="vetId" value="${vet.id}"/>
     					</spring:url>
-    					<a href="${fn:escapeXml(VetUrl)}" class="btn btn-default">Vet Details</a>
+    					<a href="${fn:escapeXml(VetUrl)}" class="btn btn-default">Más Detalles</a>
 		 		</sec:authorize>
 		 		</td>
             </tr>
@@ -47,7 +47,7 @@
         </tbody>
     </table>
     <sec:authorize access="hasAuthority('admin')">
-		<a class="btn btn-default" href='<spring:url value="/vets/new" htmlEscape="true"/>'>Add Vet</a>
+		<a class="btn btn-default" href='<spring:url value="/vets/new" htmlEscape="true"/>'>Añadir Nuevo Veterinario</a>
 	</sec:authorize>
 
     <table class="table-buttons">

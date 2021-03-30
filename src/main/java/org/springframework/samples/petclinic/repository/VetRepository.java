@@ -53,8 +53,5 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	public Collection<Specialty> findSpecialty();
 
 	void delete(Vet vet) throws DataAccessException;
-	
-	@Query("SELECT vet FROM Vet vet left join fetch vet.specialties WHERE vet.id =:id")
-	public Vet findById(@Param("id") int id);
 
 }
