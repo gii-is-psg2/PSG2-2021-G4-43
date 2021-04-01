@@ -16,7 +16,9 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -90,20 +92,20 @@ public class VetController {
 	}
 	
 	@PostMapping(value = "/vets/new")
-	public String processVetCreationForm(@Valid Vet vet, BindingResult result, ModelMap model,@RequestParam("specialties") Set<Specialty> specialties) {
+	public String processVetCreationForm(@Valid Vet vet, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
+			model.addAttribute("message",errores);
+			return initCreationVetForm(model);
 		}
-		else {
-			//creating owner, user and authorities
-			this.vetService.saveVet(vet);
-			model.addAttribute("message","Vet creado con éxito");
-			return showVetList(model);
-		}
+		//creating owner, user and authorities
+		this.vetService.saveVet(vet);
+		model.addAttribute("message","Vet creado con éxito");
+		return showVetList(model);
 	}
 	
 	@GetMapping(value = "/vets/{id}/edit")
-	public String initUpdateVetForm(@PathVariable("id") int id, Model model) {
+	public String initUpdateVetForm(@PathVariable("id") int id, ModelMap model) {
 		Vet vet = this.vetService.findVetById(id);
 		model.addAttribute(vet);
 		Collection<Specialty> specialties = specialtyRepository.findAll();
@@ -115,13 +117,13 @@ public class VetController {
 	public String processUpdateVetForm(@Valid Vet vet, BindingResult result, ModelMap model,
 			@PathVariable("id") int id) {
 		if (result.hasErrors()) {
-			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
+			model.addAttribute("message",errores);
+			return initUpdateVetForm(id,model);
 		}
-		else {
-			this.vetService.saveVet(vet);
-			model.addAttribute("Message","Veterinario actualizado con éxito");
-			return "redirect:/vets/" + id;
-		}
+		this.vetService.saveVet(vet);
+		model.addAttribute("Message","Veterinario actualizado con éxito");
+		return "redirect:/vets/" + id;
 	}
 	
 	@GetMapping("/vets/{id}")

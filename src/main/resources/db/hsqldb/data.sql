@@ -13,6 +13,16 @@ INSERT INTO users(username,password,enabled) VALUES ('owner8','0wn3r',TRUE);
 INSERT INTO users(username,password,enabled) VALUES ('owner9','0wn3r',TRUE);
 INSERT INTO users(username,password,enabled) VALUES ('owner10','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
+INSERT INTO authorities(id,username,authority) VALUES (4,'owner2','owner');
+INSERT INTO authorities(id,username,authority) VALUES (5,'owner3','owner');
+INSERT INTO authorities(id,username,authority) VALUES (6,'owner4','owner');
+INSERT INTO authorities(id,username,authority) VALUES (7,'owner5','owner');
+INSERT INTO authorities(id,username,authority) VALUES (8,'owner6','owner');
+INSERT INTO authorities(id,username,authority) VALUES (9,'owner7','owner');
+INSERT INTO authorities(id,username,authority) VALUES (10,'owner8','owner');
+INSERT INTO authorities(id,username,authority) VALUES (11,'owner9','owner');
+INSERT INTO authorities(id,username,authority) VALUES (12,'owner10','owner');
+
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');

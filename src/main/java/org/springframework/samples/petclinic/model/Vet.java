@@ -65,13 +65,12 @@ public class Vet extends Person {
 		this.specialties = specialties;
 	}
 
-	/*@XmlElement
-	public List<Specialty> getSpecialties() {
+	@XmlElement
+	public List<Specialty> getSpecialtiesXml() {
 		List<Specialty> sortedSpecs = new ArrayList<>(getSpecialtiesInternal());
 		PropertyComparator.sort(sortedSpecs, new MutableSortDefinition("name", true, true));
 		return Collections.unmodifiableList(sortedSpecs);
 	}
-	*/
 
 	public int getNrOfSpecialties() {
 		return getSpecialtiesInternal().size();
