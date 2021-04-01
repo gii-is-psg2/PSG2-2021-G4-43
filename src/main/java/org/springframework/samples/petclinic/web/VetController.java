@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -35,10 +34,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import java.util.Map;
 
 /**
  * @author Juergen Hoeller
@@ -53,14 +50,14 @@ public class VetController {
 
 	private final VetService vetService;
 
+	private final SpecialtyRepository specialtyRepository;
+
 	@Autowired
-	public VetController(VetService clinicService) {
+	public VetController(VetService clinicService, SpecialtyRepository specialtyRepository) {
 		this.vetService = clinicService;
+		this.specialtyRepository = specialtyRepository;
 	}
 	
-	@Autowired
-	private SpecialtyRepository specialtyRepository;
-
 	@GetMapping(value = { "/vets" })
 	public String showVetList(ModelMap model) {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet

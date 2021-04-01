@@ -36,7 +36,7 @@
                 </td>
                 <td>
                 <sec:authorize access="hasAuthority('admin')">
-						<spring:url value="vets/{vetId}" var="VetUrl">
+						<spring:url value="/vets/{vetId}" var="VetUrl">
         					<spring:param name="vetId" value="${vet.id}"/>
     					</spring:url>
     					<a href="${fn:escapeXml(VetUrl)}" class="btn btn-default">Más Detalles</a>

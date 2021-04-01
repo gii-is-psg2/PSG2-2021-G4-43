@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="owners">
 
-    <h2>InformaciÃ³n del DueÃ±o</h2>
+    <h2>Información del Dueño</h2>
 
 
     <table class="table table-striped">

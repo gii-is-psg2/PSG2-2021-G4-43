@@ -35,9 +35,9 @@ INSERT INTO vets VALUES (5, 'Henry', 'Stevens');
 INSERT INTO vets VALUES (6, 'Sharon', 'Jenkins');
 
 
-INSERT INTO specialties(id,name) VALUES (1, 'radiology');
-INSERT INTO specialties(id,name) VALUES (2, 'surgery');
-INSERT INTO specialties(id,name) VALUES (3, 'dentistry');
+INSERT INTO specialties VALUES (1, 'radiología');
+INSERT INTO specialties VALUES (2, 'cirugía');
+INSERT INTO specialties VALUES (3, 'odontología');
 
 
 INSERT INTO vets_specialties VALUES (2, 1);
@@ -50,7 +50,7 @@ INSERT INTO types VALUES (1, 'gato');
 INSERT INTO types VALUES (2, 'perro');
 INSERT INTO types VALUES (3, 'lagartija');
 INSERT INTO types VALUES (4, 'serpiente'); 
-INSERT INTO types VALUES (5, 'pájaro');
+INSERT INTO types VALUES (5, 'ave');
 INSERT INTO types VALUES (6, 'hamster');
 
 INSERT INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
