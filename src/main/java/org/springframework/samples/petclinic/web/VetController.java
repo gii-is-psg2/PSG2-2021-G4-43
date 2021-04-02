@@ -98,7 +98,7 @@ public class VetController {
 		//creating owner, user and authorities
 		this.vetService.saveVet(vet);
 		model.addAttribute("message","Vet creado con éxito");
-		return showVetList(model);
+		return "redirect:/vets/";
 	}
 	
 	@GetMapping(value = "/vets/{id}/edit")

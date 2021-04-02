@@ -42,7 +42,7 @@ class BookServiceTests {
 	@Test
 	void shouldFindAllByOwner() {
 		Collection<Book> books = this.bookService.findAllByOwner("owner1");
-		assertThat(books.size()).isEqualTo(2);
+		assertThat(books.size()).isEqualTo(1);
 
 		books = this.bookService.findAllByOwner("owner2");
 		assertThat(books.isEmpty()).isTrue();
@@ -59,7 +59,6 @@ class BookServiceTests {
 
 	@Test
 	@Transactional
-	@Disabled  //Expecting 2 to be equal to 3 but was not
 	public void shouldInsertBook() throws NoRoomAvailableException{
 		Collection<Book> books = this.bookService.findAll();
 		int found = books.size();
@@ -67,7 +66,6 @@ class BookServiceTests {
 		Book book = new Book();
 		LocalDate dateArrival = LocalDate.of(2021, 03, 15);
 		LocalDate dateDeparture = LocalDate.of(2021, 03, 21);
-		book.setId(1);
 		book.setDepartureDate(dateDeparture);
 		book.setArrivalDate(dateArrival);
 		Pet pet = new Pet();
@@ -81,10 +79,8 @@ class BookServiceTests {
 		book.setRoom(room);
 		
 		this.bookService.save(book);
-        assertThat(book.getId().longValue()).isNotEqualTo(0);        
-		
-        books = this.bookService.findAll();
-        assertThat(books.size()).isEqualTo(found + 1);
+        assertThat(book.getId().longValue()).isNotEqualTo(0);
+        assertThat(bookService.findAll().size()).isEqualTo(found + 1);
 	}
 	
 	
