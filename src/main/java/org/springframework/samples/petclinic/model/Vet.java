@@ -27,10 +27,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Simple JavaBean domain object representing a veterinarian.
@@ -41,12 +46,12 @@ import org.springframework.beans.support.PropertyComparator;
  * @author Arjen Poutsma
  */
 @Entity
+@Getter
+@Setter
 @Table(name = "vets")
 public class Vet extends Person {
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
-			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
+	@ManyToMany
 	private Set<Specialty> specialties;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
@@ -61,7 +66,7 @@ public class Vet extends Person {
 	}
 
 	@XmlElement
-	public List<Specialty> getSpecialties() {
+	public List<Specialty> getSpecialtiesXml() {
 		List<Specialty> sortedSpecs = new ArrayList<>(getSpecialtiesInternal());
 		PropertyComparator.sort(sortedSpecs, new MutableSortDefinition("name", true, true));
 		return Collections.unmodifiableList(sortedSpecs);

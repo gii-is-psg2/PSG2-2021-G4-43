@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
@@ -23,8 +24,8 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
-
 /**
  * Spring Data JPA OwnerRepository interface
  *
@@ -38,6 +39,8 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	 * @param owner the <code>Owner</code> to save
 	 * @see BaseEntity#isNew
 	 */
+	Collection<Owner> findAll() throws DataAccessException;
+	
 	void save(Owner owner) throws DataAccessException;
 
 	/**
@@ -59,5 +62,11 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	 */	
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	public Owner findById(@Param("id") int id);
+	
+	
+	void delete(Owner owner) throws DataAccessException;
+
+	@Query("SELECT MAX(o) FROM Owner o WHERE o.user.username LIKE :username")
+	Optional<Owner> findOwner(@Param("username") String username) throws DataAccessException;
 
 }

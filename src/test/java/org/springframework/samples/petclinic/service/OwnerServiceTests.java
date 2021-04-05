@@ -92,7 +92,7 @@ class OwnerServiceTests {
 		assertThat(owner.getLastName()).startsWith("Franklin");
 		assertThat(owner.getPets().size()).isEqualTo(1);
 		assertThat(owner.getPets().get(0).getType()).isNotNull();
-		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("cat");
+		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("gato");
 	}
 
 	@Test
@@ -133,6 +133,18 @@ class OwnerServiceTests {
 		// retrieving new name from database
 		owner = this.ownerService.findOwnerById(1);
 		assertThat(owner.getLastName()).isEqualTo(newLastName);
+	}
+
+	@Test
+	@Transactional
+	void shouldDeleteOwner() {
+		Owner owner = this.ownerService.findOwnerById(1);
+		Collection<Owner> owners = ownerService.findOwners();
+		int i = owners.size();
+		ownerService.deleteOwner(owner);
+		owners = ownerService.findOwners();
+		int j = owners.size();
+		assertThat(i-1).isEqualTo(j);
 	}
 
 
