@@ -37,7 +37,6 @@ public class OwnerService {
 
 	private OwnerRepository ownerRepository;
 	
-	
 	@Autowired
 	private UserService userService;
 	

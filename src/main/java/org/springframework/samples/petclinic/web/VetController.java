@@ -16,7 +16,8 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -33,10 +34,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import java.util.Map;
 
 /**
  * @author Juergen Hoeller
@@ -51,14 +50,14 @@ public class VetController {
 
 	private final VetService vetService;
 
+	private final SpecialtyRepository specialtyRepository;
+
 	@Autowired
-	public VetController(VetService clinicService) {
+	public VetController(VetService clinicService, SpecialtyRepository specialtyRepository) {
 		this.vetService = clinicService;
+		this.specialtyRepository = specialtyRepository;
 	}
 	
-	@Autowired
-	private SpecialtyRepository specialtyRepository;
-
 	@GetMapping(value = { "/vets" })
 	public String showVetList(ModelMap model) {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
@@ -90,20 +89,20 @@ public class VetController {
 	}
 	
 	@PostMapping(value = "/vets/new")
-	public String processVetCreationForm(@Valid Vet vet, BindingResult result, ModelMap model,@RequestParam("specialties") Set<Specialty> specialties) {
+	public String processVetCreationForm(@Valid Vet vet, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
+			model.addAttribute("message",errores);
+			return initCreationVetForm(model);
 		}
-		else {
-			//creating owner, user and authorities
-			this.vetService.saveVet(vet);
-			model.addAttribute("message","Vet creado con éxito");
-			return showVetList(model);
-		}
+		//creating owner, user and authorities
+		this.vetService.saveVet(vet);
+		model.addAttribute("message","Vet creado con éxito");
+		return "redirect:/vets/";
 	}
 	
 	@GetMapping(value = "/vets/{id}/edit")
-	public String initUpdateVetForm(@PathVariable("id") int id, Model model) {
+	public String initUpdateVetForm(@PathVariable("id") int id, ModelMap model) {
 		Vet vet = this.vetService.findVetById(id);
 		model.addAttribute(vet);
 		Collection<Specialty> specialties = specialtyRepository.findAll();
@@ -115,13 +114,13 @@ public class VetController {
 	public String processUpdateVetForm(@Valid Vet vet, BindingResult result, ModelMap model,
 			@PathVariable("id") int id) {
 		if (result.hasErrors()) {
-			return VIEWS_VET_CREATE_OR_UPDATE_FORM;
+			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
+			model.addAttribute("message",errores);
+			return initUpdateVetForm(id,model);
 		}
-		else {
-			this.vetService.saveVet(vet);
-			model.addAttribute("Message","Veterinario actualizado con éxito");
-			return "redirect:/vets/" + id;
-		}
+		this.vetService.saveVet(vet);
+		model.addAttribute("Message","Veterinario actualizado con éxito");
+		return "redirect:/vets/" + id;
 	}
 	
 	@GetMapping("/vets/{id}")

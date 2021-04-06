@@ -6,21 +6,21 @@
 
 <petclinic:layout pageName="vets">
 
-    <h2>Vet Information</h2>
+    <h2>Información del veterinario</h2>
 
 
     <table class="table table-striped">
         <tr>
-            <th>Name</th>
+            <th>Nombre</th>
             <td><b><c:out value="${vet.firstName} ${vet.lastName}"/></b></td>
         </tr>
         <tr>
-            <th>Specialties</th>
+            <th>Especialidades</th>
             <td>
             <c:forEach var="specialty" items="${vet.specialties}">
                  <c:out value="${specialty.name} "/>
             </c:forEach>
-            <c:if test="${vet.nrOfSpecialties == 0}">none</c:if>
+            <c:if test="${vet.nrOfSpecialties == 0}">ninguna</c:if>
             </td>
         </tr>
     </table>
@@ -28,11 +28,11 @@
     <spring:url value="{vetId}/edit" var="editVetUrl">
         <spring:param name="vetId" value="${vet.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(editVetUrl)}" class="btn btn-default">Edit Vet</a>
+    <a href="${fn:escapeXml(editVetUrl)}" class="btn btn-default">Editar Veterinario</a>
 
     <spring:url value="{vetId}/delete" var="deleteVetUrl">
         <spring:param name="vetId" value="${vet.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(deleteVetUrl)}" class="btn btn-default">Delete Vet</a>
+    <a href="${fn:escapeXml(deleteVetUrl)}" class="btn btn-default">Borrar Veterinario</a>
 
-</petclinic:layout>Â¡
+</petclinic:layout>

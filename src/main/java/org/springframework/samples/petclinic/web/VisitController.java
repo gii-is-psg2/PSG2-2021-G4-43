@@ -92,7 +92,7 @@ public class VisitController {
 	}
 	
 	
-	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/delete")
+	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/delete")
 	public String deletePet(@PathVariable("petId") int petId,ModelMap model){
     	Pet pet = this.petService.findPetById(petId);
     	petService.deletePet(pet);
@@ -100,11 +100,11 @@ public class VisitController {
 		return "redirect:/owners/{ownerId}";
 	}
 	
-	/*@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete")
+	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete")
 	public String deleteVisit(@PathVariable("visitId") int visitId,ModelMap model){
     	Visit visit = this.petService.findVisitByVisitId(visitId);
     	petService.deleteVisit(visit);
 		model.addAttribute("message", "VISITA BORRADA CON EXITO");
 		return "redirect:/owners/{ownerId}";
-	}*/
+	}
 }

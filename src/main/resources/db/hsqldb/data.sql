@@ -13,6 +13,16 @@ INSERT INTO users(username,password,enabled) VALUES ('owner8','0wn3r',TRUE);
 INSERT INTO users(username,password,enabled) VALUES ('owner9','0wn3r',TRUE);
 INSERT INTO users(username,password,enabled) VALUES ('owner10','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
+INSERT INTO authorities(id,username,authority) VALUES (4,'owner2','owner');
+INSERT INTO authorities(id,username,authority) VALUES (5,'owner3','owner');
+INSERT INTO authorities(id,username,authority) VALUES (6,'owner4','owner');
+INSERT INTO authorities(id,username,authority) VALUES (7,'owner5','owner');
+INSERT INTO authorities(id,username,authority) VALUES (8,'owner6','owner');
+INSERT INTO authorities(id,username,authority) VALUES (9,'owner7','owner');
+INSERT INTO authorities(id,username,authority) VALUES (10,'owner8','owner');
+INSERT INTO authorities(id,username,authority) VALUES (11,'owner9','owner');
+INSERT INTO authorities(id,username,authority) VALUES (12,'owner10','owner');
+
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
@@ -25,9 +35,9 @@ INSERT INTO vets VALUES (5, 'Henry', 'Stevens');
 INSERT INTO vets VALUES (6, 'Sharon', 'Jenkins');
 
 
-INSERT INTO specialties(id,name) VALUES (1, 'radiology');
-INSERT INTO specialties(id,name) VALUES (2, 'surgery');
-INSERT INTO specialties(id,name) VALUES (3, 'dentistry');
+INSERT INTO specialties VALUES (1, 'radiología');
+INSERT INTO specialties VALUES (2, 'cirugía');
+INSERT INTO specialties VALUES (3, 'odontología');
 
 
 INSERT INTO vets_specialties VALUES (2, 1);
@@ -40,7 +50,7 @@ INSERT INTO types VALUES (1, 'gato');
 INSERT INTO types VALUES (2, 'perro');
 INSERT INTO types VALUES (3, 'lagartija');
 INSERT INTO types VALUES (4, 'serpiente'); 
-INSERT INTO types VALUES (5, 'pájaro');
+INSERT INTO types VALUES (5, 'ave');
 INSERT INTO types VALUES (6, 'hamster');
 
 INSERT INTO owners VALUES (1, 'George', 'Franklin', '110 W. Liberty St.', 'Madison', '6085551023', 'owner1');
