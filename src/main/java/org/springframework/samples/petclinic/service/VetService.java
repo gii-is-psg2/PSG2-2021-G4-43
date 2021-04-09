@@ -65,12 +65,12 @@ public class VetService {
 		return vetRepository.findById(id);
 	}
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Specialty> findSpecialty() throws DataAccessException {
 		return vetRepository.findSpecialty();
 	}
   
-  @Transactional
+	@Transactional
 	public void deleteVet(Vet vet) throws DataAccessException {
 		vetRepository.delete(vet);
 	}
