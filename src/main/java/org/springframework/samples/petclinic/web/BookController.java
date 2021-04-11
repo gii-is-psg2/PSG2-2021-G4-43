@@ -77,9 +77,14 @@ public class BookController {
 			return "books/createBookForm";
 		} else {
 			try {
-				bookService.save(book);
-				model.addAttribute("message","La reserva se ha realizado con éxito.");
-				return listBooks(model);
+				if(!this.bookService.findSameBooks(book.getArrivalDate(), book.getDepartureDate(), book.getPet().getId())) {
+					bookService.save(book);
+					model.addAttribute("message","La reserva se ha realizado con éxito.");
+					return listBooks(model);
+				}else {
+					model.addAttribute("message","Ya existe una reserva para esta mascota en la fecha indicada");
+					return "books/createBookForm";
+				}
 			} catch (NoRoomAvailableException e) {
 				model.addAttribute("message","Lo sentimos, no tenemos una habitación libre en la fecha indicada.");
 				return "books/createBookForm";

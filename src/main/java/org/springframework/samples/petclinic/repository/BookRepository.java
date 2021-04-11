@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -22,6 +23,9 @@ public interface BookRepository extends Repository<Book, Integer>{
 	
 	@Query("SELECT DISTINCT b FROM Book b WHERE b.room.id LIKE :id")
 	Collection<Book> findAllByRoomId(@Param("id") int id) throws DataAccessException;
+	
+	@Query("SELECT DISTINCT b FROM Book b WHERE ((:arrivalDate >= b.arrivalDate and :arrivalDate <= b.departureDate) or (:departureDate >= b.arrivalDate and :departureDate <= b.departureDate)) and b.pet.id = :petId")
+	Book findSameBooks(LocalDate arrivalDate, LocalDate departureDate, Integer petId) throws DataAccessException;
 	
 	void delete(Book book);
 	
