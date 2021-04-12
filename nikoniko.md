@@ -34,8 +34,8 @@ In the retrospective meeting, the team has a discussion about those results.
 
 | Day           | JesusAparicioOrtiz    | manguecor  | Supremaciu     | fergongar1     | framurpri     | Nendanfito     |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
-| Day 1         | :smiley:        | :smiley:         | :smiley:                | :smiley:               | :smiley:               | :smiley:               |
-| Day 2         |               |                |                |                |                |                |
-| Day 3         |               |                |                |                |                |                |
-| Day 4         |               |               |                |                |                |                |
+| Day 1         | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| Day 2         | -             |                |                |                |                |                |
+| Day 3         | -             |                |                |                |                |                |
+| Day 4         | :smiley:      | :smiley:       | :neutral_face: |  :smiley:      | :fearful:      | :smiley:       |
 ...
