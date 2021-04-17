@@ -80,6 +80,10 @@
 													<a href="<c:url value="/books" />"
 													class="btn btn-primary btn-block btn-sm">Reservas</a>
 												</p>
+												<p class="text-left">
+													<a href="<c:url value="/adoptions" />"
+													class="btn btn-primary btn-block btn-sm">Adopciones</a>
+												</p>
 											</sec:authorize>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
