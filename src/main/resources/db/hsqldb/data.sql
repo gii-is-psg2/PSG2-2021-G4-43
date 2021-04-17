@@ -90,3 +90,11 @@ INSERT INTO rooms(id) VALUES (3);
 INSERT INTO books(id,arrival_date,departure_date,pet_id,room_id) VALUES (1, '2021-01-01', '2021-01-07', 1, 1);
 INSERT INTO books(id,arrival_date,departure_date,pet_id,room_id) VALUES (2, '2021-01-02', '2021-01-09', 3, 2);
 
+INSERT INTO adoptions(id,pet_id) VALUES (1, 1);
+INSERT INTO adoptions(id,pet_id) VALUES (2, 2);
+INSERT INTO adoptions(id,pet_id) VALUES (3, 3);
+INSERT INTO adoptions(id,pet_id) VALUES (4, 4);
+INSERT INTO adoptions(id,pet_id) VALUES (5, 5);
+INSERT INTO adoptions(id,pet_id) VALUES (6, 6);
+INSERT INTO adoptions(id,pet_id) VALUES (7, 7);
+INSERT INTO adoptions(id,pet_id) VALUES (8, 8);
