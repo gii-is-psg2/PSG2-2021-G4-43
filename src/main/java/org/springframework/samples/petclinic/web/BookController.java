@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/books2")
+@RequestMapping("/books")
 public class BookController {
 
 	@Autowired

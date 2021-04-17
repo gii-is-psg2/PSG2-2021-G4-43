@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -30,8 +31,9 @@ import lombok.Setter;
 @Table(name = "adoptions")
 public class Adoption extends BaseEntity {
 
+	@NotNull
 	@ManyToOne
 	private Pet pet;
 	
-	private String aaa;
+	private Boolean finished;
 }

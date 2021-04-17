@@ -2,8 +2,8 @@ package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adoption;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.service.AdoptionService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.exceptions.PetAlreadyOnAdoptionException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/books")
+@RequestMapping("/adoptions")
 public class AdoptionController {
 
 	@Autowired
@@ -37,17 +37,18 @@ public class AdoptionController {
 	private OwnerService ownerService;
 
 	@ModelAttribute("pets")
-	public Collection<Pet> getPets() {
+	public Map<Integer, String> getPets() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Owner owner = ownerService.findOwner(username).get();
 		Collection<Pet> pets = owner.getPets();
-		return pets;
+		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(x->x.getId(), y->y.getName()));
+		return petsId;
 	}
 	
 	@GetMapping()
 	public String listAdoptions(ModelMap model) {
-		Collection<Adoption> adoptions = adoptionService.findAll();
+		Collection<Adoption> adoptions = adoptionService.findAllPendientes();
 		model.addAttribute("adoptions",adoptions);
 		return "adoptions/adoptionsList";
 	}
@@ -73,13 +74,20 @@ public class AdoptionController {
 			model.addAttribute("message",errores);
 			return "adoptions/createAdoptionForm";
 		} else {
+			adoption.setFinished(false);
+			try {
 			adoptionService.saveAdoption(adoption);
 			model.addAttribute("message","La adopcion se ha creado con éxito.");
 			return listAdoptions(model);
+			}
+			catch(PetAlreadyOnAdoptionException e) {
+				model.addAttribute("message","La mascota ya está en adopción.");
+				return "adoptions/createAdoptionForm";
+			}
 		}
 	}
 	
-
+	/* De momento, no es necesario
 	@GetMapping("/{id}/delete")
 	public String initCreationadoptionForm(@PathVariable("id") int id, ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(id);
@@ -91,6 +99,7 @@ public class AdoptionController {
 		model.addAttribute("message","La adopción se ha borrado con éxito");
 		return listAdoptions(model);
 	}
+	*/
 
 }
 

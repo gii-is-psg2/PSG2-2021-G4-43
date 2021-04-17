@@ -5,13 +5,6 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="adoptions">
-    <jsp:attribute name="customScript">
-        <script>
-            $(function () {
-                $("#birthDate").datepicker({dateFormat: 'yy/mm/dd'});
-            });
-        </script>
-    </jsp:attribute>
     <jsp:body>
         <h2>
             Poner en Adopción
@@ -21,12 +14,12 @@
             <input type="hidden" name="id" value="${adoption.id}"/>
             <div class="form-group has-feedback">
                 <div class="control-group">
-                    <petclinic:selectField name="pet" label="Mascota" names="${pets}" size="5"/>
+                	<petclinic:selectFieldMap name="pet" label="Mascota" names="${pets}" size="5"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-					<button class="btn btn-default" type="submit">Aï¿½adir Mascota</button>
+					<button class="btn btn-default" type="submit">Añadir Mascota</button>
                 </div>
             </div>
         </form:form>

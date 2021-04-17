@@ -36,6 +36,6 @@
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href='<spring:url value="/adoptions/new" htmlEscape="true"/>'>Poner en adopciÃ³n</a>
+    <a class="btn btn-default" href='<spring:url value="/adoptions/new" htmlEscape="true"/>'>Poner mascota en adopción</a>
 </petclinic:layout>
 		 	
