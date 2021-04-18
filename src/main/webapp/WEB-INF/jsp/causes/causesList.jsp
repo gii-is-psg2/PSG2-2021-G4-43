@@ -17,6 +17,8 @@
             <th>Presupuesto objetivo</th>
             <th>Meta alcanzada</th>
             <th>Detalles</th>
+            <th>Donación</th>
+
         </tr>
         </thead>
         <tbody>
@@ -42,6 +44,10 @@
    					</spring:url>
    					<a href="${fn:escapeXml(CauseDetailsUrl)}" class="btn btn-default">Mas Detalles</a>
 		 		</td>
+                 <td>
+                    <form:form modelAttribute="cause" class="form-horizontal"><input type="hidden" name="id" value="${cause.id}"/> </form:form>
+                <a href="/donations/new" class="btn btn-default">Realizar Donación</a>    
+                </td>
             </tr>
         </c:forEach>
         </tbody>

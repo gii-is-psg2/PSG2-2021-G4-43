@@ -8,12 +8,12 @@
 
 <petclinic:layout pageName="causes">
     <h2>
-        Añadir Causa
+        AÃ±adir Causa
     </h2>
     <form:form modelAttribute="cause" class="form-horizontal" id="add-book-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre" name="name"/>
-            <petclinic:inputField label="Descripción" name="description"/>
+            <petclinic:inputField label="DescripciÃ³n" name="description"/>
             <petclinic:inputField label="Presupuesto objetivo" name="budgetTarget"/>
             <petclinic:inputField label="ONG" name="ong"/>
         </div>

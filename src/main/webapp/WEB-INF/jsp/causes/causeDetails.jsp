@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="causes">
 
-    <h2>Información de la cause</h2>
+    <h2>Informaciï¿½n de la cause</h2>
 
 
     <table class="table table-striped">
