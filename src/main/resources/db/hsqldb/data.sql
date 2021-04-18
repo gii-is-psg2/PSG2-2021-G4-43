@@ -91,9 +91,16 @@ INSERT INTO books(id,arrival_date,departure_date,pet_id,room_id) VALUES (1, '202
 INSERT INTO books(id,arrival_date,departure_date,pet_id,room_id) VALUES (2, '2021-01-02', '2021-01-09', 3, 2);
 
 
+
 INSERT INTO causes(id,name,description,budget_achieved,budget_target,ong) VALUES (1, 'Vacunas en Zimbawe', 'Se necesita dinero para administrar vacunas en Zimbawe', 0, 100000,'Cruz roja');
 INSERT INTO causes(id,name,description,budget_achieved,budget_target,ong) VALUES (2, 'Vacunas en Kenia', 'Se necesita dinero para administrar vacunas en Kenia', 2000, 100000,'Aministia internacional');
 INSERT INTO causes(id,name,description,budget_achieved,budget_target,ong) VALUES (3, 'Vacunas en Ghana', 'Se necesita dinero para administrar vacunas en Ghana', 4500, 100000,'Cruz roja');
 INSERT INTO causes(id,name,description,budget_achieved,budget_target,ong) VALUES (4, 'Vacunas en Tanzania', 'Se necesita dinero para administrar vacunas en Tanzania', 200000, 100000,'Caritas');
 INSERT INTO causes(id,name,description,budget_achieved,budget_target,ong) VALUES (5, 'Vacunas en Nigeria', 'Se necesita dinero para administrar vacunas en Nigeria', 0, 50,'Cruz roja');
 INSERT INTO causes(id,name,description,budget_achieved,budget_target,ong) VALUES (6, 'Vacunas en Senegal', 'Se necesita dinero para administrar vacunas en Senegal', 0, 100000,'Amnisita internacional');
+
+INSERT INTO adoptions(id,pet_id,finished) VALUES (1, 1, true);
+INSERT INTO adoptions(id,pet_id,finished) VALUES (2, 2, true);
+INSERT INTO adoptions(id,pet_id,finished) VALUES (3, 3, false);
+INSERT INTO adoptions(id,pet_id,finished) VALUES (4, 4, false);
+INSERT INTO adoptions(id,pet_id,finished) VALUES (5, 5, false);
