@@ -40,8 +40,11 @@ public class AdoptionService {
 	}
 
 	public Collection<Adoption> findAllPendientes() {
-		// TODO Auto-generated method stub
 		return adoptionRepository.findAllByFinishedEquals(false);
+	}
+
+	public void save(Adoption adoption) {
+		adoptionRepository.save(adoption);
 	}
 
 }
