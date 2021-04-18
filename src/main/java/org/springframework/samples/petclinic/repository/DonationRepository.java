@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.repository;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,7 @@ public interface DonationRepository extends Repository<Donation, Integer> {
 	
 	Collection<Donation> findAll() throws DataAccessException;
 	
-	@Query("SELECT d FROM Donation d where d.id=:donationId")
-	Donation findByDonationId(@Param(value = "donationId") int donationId);
+	Optional<Donation> findById(int id) throws DataAccessException;
 	
 	@Query("SELECT d FROM Donation d where d.cause.id=:causeId")
 	Collection<Donation> findByCauseId(@Param(value = "causeId") int causeId);
