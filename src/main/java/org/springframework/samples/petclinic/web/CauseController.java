@@ -83,7 +83,8 @@ public class CauseController {
     public String initCreationForm(@PathVariable("id") int id,ModelMap model) {
     	Cause causa = causeService.findById(id).get();
     	if (causa.isClosed()){
-            return "redirect:/causes";
+    		model.addAttribute("message","Ya se ha recaudado lo necesario para esta causa por lo que no son necesarias más donaciones");
+    		return listCauses(model);
     	} 
         Donation donation = new Donation();
         model.addAttribute("donation", donation);
@@ -96,13 +97,26 @@ public class CauseController {
             return "/donations/createDonationForm";
         }
         Cause cause = causeService.findById(id).get();
+        if (donation.getAmount() > (cause.getBudgetTarget()-cause.getBudgetAchieved())) {
+        	model.addAttribute("message","La cantidad que desea donar es mayor que el objetivo de la donación");
+    		return "/donations/createDonationForm";
+        }
         cause.setBudgetAchieved(cause.getBudgetAchieved()+donation.getAmount());
         causeService.saveCause(cause);
         donation.setClient(SecurityContextHolder.getContext().getAuthentication().getName());
         donation.setCause(cause);
         donation.setDate(LocalDate.now());
+        donation.setId(id);
         donationService.saveDonation(donation);
-        return "redirect:/causes"; 
+        return "redirect:/causes/"; 
     }
+    
+    @GetMapping("/{id}/donations")
+	public String showDonation(@PathVariable("id") int id, ModelMap model) {
+		List<Donation> donations = donationService.findDonationsByCause(id);
+		model.addAttribute("donations",donations);
+		return "/donations/showDonations";
+	}
+
 
 }

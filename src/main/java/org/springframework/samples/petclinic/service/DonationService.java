@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
+import org.springframework.samples.petclinic.repository.CauseRepository;
 import org.springframework.samples.petclinic.repository.DonationRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ public class DonationService {
 	
 	@Autowired
 	private DonationRepository donationRepository;
+	
+	@Autowired
+	private CauseRepository causeRepository;
+	
 	
 	@Transactional
 	public Collection<Donation> findAll() {
@@ -33,13 +38,15 @@ public class DonationService {
 		donationRepository.save(donation);
 	}
 
-	public List<Donation> findDonationsByCause(List<Cause> causes) {
+	public List<Donation> findDonationsByCause(int causeId) {
 		List<Donation> donations = new ArrayList<>();
-		for(Cause c:causes) {
-			Collection<Donation> causeDonations = donationRepository.findByCauseId(c.getId());
+			Collection<Donation> causeDonations = donationRepository.findByCauseId(causeId);
 			donations.addAll(causeDonations);
-		}
 		return donations;
+	}
+	
+	public Collection<Donation> findDonationsByCauseId(Integer id) {
+		return donationRepository.findByCauseId(id);
 	}
 	
 	

@@ -55,5 +55,5 @@
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href='<spring:url value="/causes/new" htmlEscape="true"/>'>Añadir causa</a>
+    <a class="btn btn-default" href='<spring:url value="/causes/new" htmlEscape="true"/>'>AÃ±adir causa</a>
 </petclinic:layout>
