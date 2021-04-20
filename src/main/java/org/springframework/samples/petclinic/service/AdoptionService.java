@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adoption;
+import org.springframework.samples.petclinic.model.AdoptionPetition;
 import org.springframework.samples.petclinic.repository.AdoptionRepository;
 import org.springframework.samples.petclinic.service.exceptions.PetAlreadyOnAdoptionException;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class AdoptionService {
 
 	@Autowired
 	private AdoptionRepository adoptionRepository;
+
+	@Autowired
+	private AdoptionPetitionService adoptionPetitionService;
 
 	@Transactional(readOnly = true)
 	public Collection<Adoption> findAll() {
@@ -36,6 +40,10 @@ public class AdoptionService {
 	
 	@Transactional
 	public void delete(Adoption adoption) {
+		Collection<AdoptionPetition> petitions = adoptionPetitionService.findAllByAdoption(adoption);
+		for(AdoptionPetition p : petitions) {
+			adoptionPetitionService.deletePetition(p);
+		}
 		adoptionRepository.delete(adoption);
 	}
 

@@ -104,3 +104,7 @@ INSERT INTO adoptions(id,pet_id,finished) VALUES (2, 2, true);
 INSERT INTO adoptions(id,pet_id,finished) VALUES (3, 3, false);
 INSERT INTO adoptions(id,pet_id,finished) VALUES (4, 4, false);
 INSERT INTO adoptions(id,pet_id,finished) VALUES (5, 5, false);
+
+INSERT INTO petitions(id,adoption_id,owner_id,state,description) VALUES (1, 1, 4, 'RECHAZADO', 'Cuidaré de tu mascota');
+INSERT INTO petitions(id,adoption_id,owner_id,state,description) VALUES (2, 2, 2, 'ACEPTADO', 'Mis demás mascotas son felices');
+INSERT INTO petitions(id,adoption_id,owner_id,state,description) VALUES (3, 3, 1, 'PENDIENTE', 'Jugaré mucho con mi nuevo amigo');

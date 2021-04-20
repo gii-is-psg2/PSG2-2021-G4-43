@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,7 +25,7 @@ public class AdoptionPetition extends BaseEntity {
 	private Owner owner;
 	
 	@NotNull
-	private PetitionState state;
+	private String state;
 	
 	@NotEmpty
 	private String description;

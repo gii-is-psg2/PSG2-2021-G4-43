@@ -32,13 +32,22 @@ public class AdoptionPetitionService {
 	public void savePetition(AdoptionPetition petition) {
 		petitionRepository.save(petition);
 	}
+	
+	@Transactional
+	public void deletePetition(AdoptionPetition petition) {
+		petitionRepository.delete(petition);
+	}
 
 	public Collection<AdoptionPetition> findAllByOwner(Owner owner) {
 		return petitionRepository.findAllByOwner(owner);
 	}
 
-	public Collection<AdoptionPetition> findAllByAdoptionAndState(Adoption adoption, PetitionState state) {
+	public Collection<AdoptionPetition> findAllByAdoptionAndState(Adoption adoption, String state) {
 		return petitionRepository.findAllByAdoptionAndState(adoption,state);
+	}
+
+	public Collection<AdoptionPetition> findAllByAdoption(Adoption adoption) {
+		return petitionRepository.findAllByAdoption(adoption);
 	}
 
 }
