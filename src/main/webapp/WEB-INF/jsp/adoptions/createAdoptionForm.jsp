@@ -23,5 +23,6 @@
                 </div>
             </div>
         </form:form>
+    <a class="btn btn-default" href='<spring:url value="/adoptions" htmlEscape="true"/>'>Volver a la lista de adopciones</a>
     </jsp:body>
 </petclinic:layout>
