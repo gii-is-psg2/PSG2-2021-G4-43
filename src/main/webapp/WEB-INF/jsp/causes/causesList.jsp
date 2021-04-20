@@ -5,6 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <petclinic:layout pageName="causes">
     <h2>Causas</h2>
@@ -17,6 +18,8 @@
             <th>Presupuesto objetivo</th>
             <th>Meta alcanzada</th>
             <th>Detalles</th>
+            <th>Donacion</th>
+
         </tr>
         </thead>
         <tbody>
@@ -32,7 +35,7 @@
                     <c:out value="${cause.budgetTarget}"/>
                 </td>
                 <td>
-                	<c:if test="${cause.budgetAchieved > cause.budgetTarget}">
+                	<c:if test="${cause.budgetAchieved >= cause.budgetTarget}">
                     	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X</p>
                     </c:if>
                 </td>
@@ -42,6 +45,12 @@
    					</spring:url>
    					<a href="${fn:escapeXml(CauseDetailsUrl)}" class="btn btn-default">Mas Detalles</a>
 		 		</td>
+                 <td>
+                	<spring:url value="/causes/{causeId}/donations/new" var="createDonationUrl">
+       					<spring:param name="causeId" value="${cause.id}"/>
+   					</spring:url>
+   					<a href="${fn:escapeXml(createDonationUrl)}" class="btn btn-default">Realizar donacion</a>  
+                </td>
             </tr>
         </c:forEach>
         </tbody>

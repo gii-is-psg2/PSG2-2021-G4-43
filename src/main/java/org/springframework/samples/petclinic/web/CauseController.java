@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +10,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cause;
+import org.springframework.samples.petclinic.model.Donation;
 import org.springframework.samples.petclinic.service.CauseService;
+import org.springframework.samples.petclinic.service.DonationService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,6 +28,9 @@ public class CauseController {
 
 	@Autowired
 	private CauseService causeService;
+	
+	@Autowired
+    private DonationService donationService;
 	
 	@GetMapping()
 	public String listCauses(ModelMap model) {
@@ -71,5 +78,45 @@ public class CauseController {
 		model.addAttribute("message","La causa se ha borrado con éxito");
 		return listCauses(model);
 	}
+	
+	@GetMapping(value = "/{id}/donations/new")
+    public String initCreationForm(@PathVariable("id") int id,ModelMap model) {
+    	Cause causa = causeService.findById(id).get();
+    	if (causa.isClosed()){
+    		model.addAttribute("message","Ya se ha recaudado lo necesario para esta causa por lo que no son necesarias más donaciones");
+    		return listCauses(model);
+    	} 
+        Donation donation = new Donation();
+        model.addAttribute("donation", donation);
+        return "/donations/createDonationForm";
+    }
+
+    @PostMapping(value = "/{id}/donations/new")
+    public String processCreationForm(@PathVariable("id") int id,@Valid Donation donation, BindingResult result,ModelMap model) {
+        if (result.hasErrors()) {
+            return "/donations/createDonationForm";
+        }
+        Cause cause = causeService.findById(id).get();
+        if (donation.getAmount() > (cause.getBudgetTarget()-cause.getBudgetAchieved())) {
+        	model.addAttribute("message","La cantidad que desea donar es mayor que el objetivo de la donación");
+    		return "/donations/createDonationForm";
+        }
+        cause.setBudgetAchieved(cause.getBudgetAchieved()+donation.getAmount());
+        causeService.saveCause(cause);
+        donation.setClient(SecurityContextHolder.getContext().getAuthentication().getName());
+        donation.setCause(cause);
+        donation.setDate(LocalDate.now());
+        donation.setId(id);
+        donationService.saveDonation(donation);
+        return "redirect:/causes/"; 
+    }
+    
+    @GetMapping("/{id}/donations")
+	public String showDonation(@PathVariable("id") int id, ModelMap model) {
+		List<Donation> donations = donationService.findDonationsByCause(id);
+		model.addAttribute("donations",donations);
+		return "/donations/showDonations";
+	}
+
 
 }
