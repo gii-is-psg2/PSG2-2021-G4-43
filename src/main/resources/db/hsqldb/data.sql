@@ -104,3 +104,5 @@ INSERT INTO adoptions(id,pet_id,finished) VALUES (2, 2, true);
 INSERT INTO adoptions(id,pet_id,finished) VALUES (3, 3, false);
 INSERT INTO adoptions(id,pet_id,finished) VALUES (4, 4, false);
 INSERT INTO adoptions(id,pet_id,finished) VALUES (5, 5, false);
+
+INSERT INTO donations(id,amount,date_of_donation,client,cause_id) VALUES (1,'0','2021-04-20','owner1',1);
