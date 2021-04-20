@@ -16,8 +16,9 @@
         <thead>
         <tr>
             <th>Nombre</th>
-            <th>Fecha</th>
-            <th>Tipo</th>
+            <th>Especie</th>
+            <th>Dueño</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -27,15 +28,32 @@
                     <c:out value="${adoption.pet.name}"/>
                 </td>
                 <td>
-                    <c:out value="${adoption.pet.birthDate}"/>
+                    <c:out value="${adoption.pet.type}"/>
                 </td>
                 <td>
-                    <c:out value="${adoption.pet.type}"/>
+                    <c:out value="${adoption.pet.owner.firstName} ${adoption.pet.owner.lastName}"/>
+                </td>
+                <td>
+                <c:choose>
+                    <c:when test="${adoption.pet.owner == owner}">
+                    	<spring:url value="/adoptions/{adoptionId}" var="ReceivedRequestsUrl">
+        					<spring:param name="adoptionId" value="${adoption.id}"/>
+    					</spring:url>
+    					<a href="${fn:escapeXml(ReceivedRequestsUrl)}" class="btn btn-default">Gestionar solicitudes</a>
+                    </c:when>
+                    <c:otherwise>
+                    	<spring:url value="/adoptions/petitions/request/{adoptionId}" var="AdoptionRequestUrl">
+        					<spring:param name="adoptionId" value="${adoption.id}"/>
+    					</spring:url>
+    					<a href="${fn:escapeXml(AdoptionRequestUrl)}" class="btn btn-default">Solicitar adopción</a>
+                    </c:otherwise>
+                </c:choose>
                 </td>
 		 	</tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href='<spring:url value="/adoptions/new" htmlEscape="true"/>'>Poner mascota en adopción</a>
+    <a class="btn btn-default" href='<spring:url value="/adoptions/new" htmlEscape="true"/>'>Poner una mascota en adopción</a>
+    <a class="btn btn-default" href='<spring:url value="/adoptions/petitions" htmlEscape="true"/>'>Mis peticiones de adopción</a>
 </petclinic:layout>
 		 	

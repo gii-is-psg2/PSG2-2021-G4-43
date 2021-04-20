@@ -101,4 +101,8 @@ public class PetService {
 		visitRepository.delete(visit);
 	}
 
+	public void save(Pet pet) {
+		petRepository.save(pet); 
+	}
+
 }
