@@ -80,7 +80,7 @@ class BookControllerTests {
 	
 	@WithMockUser(value = "spring")
     @Test
-	void testProcessCreationFormSuccess() throws Exception {
+	void testProcessCreationBookForm() throws Exception {
 		mockMvc.perform(post("/books/new")
 				.with(csrf())
 				.param("arrivalDate", "2021-01-01")
@@ -88,7 +88,6 @@ class BookControllerTests {
 				.param("pet", "Leo"))
 				.andExpect(status().isOk());
 	}
-	
 	
 	@WithMockUser(value = "spring")
     @Test
