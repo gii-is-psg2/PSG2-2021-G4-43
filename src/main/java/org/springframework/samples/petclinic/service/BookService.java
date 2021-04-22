@@ -57,7 +57,7 @@ public class BookService {
 	
 	@Transactional(readOnly = true)
 	public Boolean findSameBooks(LocalDate arrivalDate, LocalDate departureDate, Integer petId) throws DataAccessException {
-		return bookRepository.findSameBooks(arrivalDate, departureDate, petId) != null ? true : false;
+		return bookRepository.findSameBooks(arrivalDate, departureDate, petId).size()>0;
 	}
 	
 	@Transactional
