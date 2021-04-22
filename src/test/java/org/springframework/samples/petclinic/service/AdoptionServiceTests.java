@@ -22,24 +22,23 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Adoption;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.petclinic.service.exceptions.PetAlreadyOnAdoptionException;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -54,7 +53,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <li><strong>Dependency Injection</strong> of test fixture instances, meaning that we
  * don't need to perform application context lookups. See the use of
  * {@link Autowired @Autowired} on the <code>{@link
- * OwnerServiceTests#clinicService clinicService}</code> instance variable, which uses
+ * ClinicServiceTests#clinicService clinicService}</code> instance variable, which uses
  * autowiring <em>by type</em>.
  * <li><strong>Transaction management</strong>, meaning each test method is executed in
  * its own transaction, which is automatically rolled back by default. Thus, even if tests
@@ -73,79 +72,85 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-class OwnerServiceTests {                
+class AdoptionServiceTests {        
         @Autowired
-	protected OwnerService ownerService;
+	protected AdoptionService adoptionService;
+        
+        @Autowired
+	protected PetService petService;
 
 	@Test
-	void shouldFindOwnersByLastName() {
-		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Davis");
-		assertThat(owners.size()).isEqualTo(2);
-
-		owners = this.ownerService.findOwnerByLastName("Daviss");
-		assertThat(owners.isEmpty()).isTrue();
-	}
+	void shouldFindAllAdoptions() {
+		Collection<Adoption> adoptions = this.adoptionService.findAll();
+		assertThat(adoptions.size()).isEqualTo(5);
+	}	
 
 	@Test
-	void shouldFindSingleOwnerWithPet() {
-		Owner owner = this.ownerService.findOwnerById(1);
-		assertThat(owner.getLastName()).startsWith("Franklin");
-		assertThat(owner.getPets().size()).isEqualTo(1);
-		assertThat(owner.getPets().get(0).getType()).isNotNull();
-		assertThat(owner.getPets().get(0).getType().getName()).isEqualTo("gato");
-	}
+	void shouldFindAdoptionWithCorrectId() {
+		Adoption adoption = this.adoptionService.findById(1).get();
+		assertThat(adoption.getPet().getId()).isEqualTo(1);
+		assertThat(adoption.getFinished()).isEqualTo(true);
 
-	@Test
-	@Transactional
-	public void shouldInsertOwner() {
-		Collection<Owner> owners = this.ownerService.findOwnerByLastName("Schultz");
-		int found = owners.size();
-
-		Owner owner = new Owner();
-		owner.setFirstName("Sam");
-		owner.setLastName("Schultz");
-		owner.setAddress("4, Evans Street");
-		owner.setCity("Wollongong");
-		owner.setTelephone("4444444444");
-                User user=new User();
-                user.setUsername("Sam");
-                user.setPassword("supersecretpassword");
-                user.setEnabled(true);
-                owner.setUser(user);                
-                
-		this.ownerService.saveOwner(owner);
-		assertThat(owner.getId().longValue()).isNotEqualTo(0);
-
-		owners = this.ownerService.findOwnerByLastName("Schultz");
-		assertThat(owners.size()).isEqualTo(found + 1);
 	}
 
 	@Test
 	@Transactional
-	void shouldUpdateOwner() {
-		Owner owner = this.ownerService.findOwnerById(1);
-		String oldLastName = owner.getLastName();
-		String newLastName = oldLastName + "X";
+	public void shouldInsertAdoptionIntoDatabaseAndGenerateId() {
+		int found = adoptionService.findAll().size();
 
-		owner.setLastName(newLastName);
-		this.ownerService.saveOwner(owner);
-
-		// retrieving new name from database
-		owner = this.ownerService.findOwnerById(1);
-		assertThat(owner.getLastName()).isEqualTo(newLastName);
+		Adoption adoption = new Adoption();
+		Pet pet = this.petService.findPetById(6);
+		adoption.setFinished(false);
+		adoption.setPet(pet);
+		try {
+			adoptionService.saveAdoption(adoption);
+		} catch (PetAlreadyOnAdoptionException e) {
+            Logger.getLogger(AdoptionServiceTests.class.getName()).log(Level.SEVERE, null, e);
+		}
+		assertThat(adoptionService.findAll().size()).isEqualTo(found + 1);
+		// checks that id has been generated
+		assertThat(adoption.getId()).isNotNull();
 	}
 
-//	@Test
-//	@Transactional
-//	void shouldDeleteOwner() {
-//		Owner owner = this.ownerService.findOwnerById(1);
-//		Collection<Owner> owners = ownerService.findOwners();
-//		int i = owners.size();
-//		ownerService.deleteOwner(owner);
-//		owners = ownerService.findOwners();
-//		int j = owners.size();
-//		assertThat(i-1).isEqualTo(j);
-//	}
+	@Test
+	@Transactional
+	void shouldDeleteAdoption() {
+		Adoption adoption = this.adoptionService.findById(1).get();
+		Collection<Adoption> adoptions = adoptionService.findAll();
+		int i = adoptions.size();
+		adoptionService.delete(adoption);
+		adoptions = adoptionService.findAll();
+		int j = adoptions.size();
+		assertThat(i-1).isEqualTo(j);
+	}
 
 
+	@Test
+	void shouldFindAllPendientes() {
+		Collection<Adoption> adoptions = this.adoptionService.findAllPendientes();
+		assertThat(adoptions.size()).isEqualTo(3);
+	}	
+	
+	@Test
+	@Transactional
+	public void shouldThrowExceptionInsertingAdoptionsWithTheSamePet() {
+		int found = adoptionService.findAll().size();
+
+		Adoption adoption = new Adoption();
+		Pet pet = this.petService.findPetById(6);
+		adoption.setFinished(false);
+		adoption.setPet(pet);
+		try {
+			adoptionService.saveAdoption(adoption);
+		} catch (PetAlreadyOnAdoptionException e) {
+			// The adoption already exists!
+			e.printStackTrace();
+		}
+		Adoption anotherAdoptionForTheSameName = new Adoption();
+		anotherAdoptionForTheSameName.setFinished(false);
+		anotherAdoptionForTheSameName.setPet(pet);
+		Assertions.assertThrows(PetAlreadyOnAdoptionException.class, () ->{
+			adoptionService.saveAdoption(adoption);
+		});		
+	}
 }

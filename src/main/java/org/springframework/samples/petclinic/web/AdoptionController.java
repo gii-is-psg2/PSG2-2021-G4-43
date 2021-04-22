@@ -111,7 +111,7 @@ public class AdoptionController {
 			model.addAttribute("message","Solicitud de adopción no existente o ya cerrada.");
 			return listAdoptions(model);
 		}
-		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), PetitionState.PENDIENTE);
+		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), "PENDIENTE");
 		model.addAttribute("petitions",petitions);
 		model.addAttribute("adoption",adoption.get());
 		return "adoptions/receivedPetitionsList";
@@ -121,16 +121,16 @@ public class AdoptionController {
 	public String acceptPetition(@PathVariable("adoptionId") int adoptionId,@PathVariable("petitionId") int petitionId,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(adoptionId);
 		Optional<AdoptionPetition> petition = petitionService.findById(petitionId);
-		if(!petition.isPresent() || petition.get().getState()!=PetitionState.PENDIENTE || !adoption.isPresent() || adoption.get().getFinished()) {
+		if(!petition.isPresent() || !petition.get().getState().equals("PENDIENTE") || !adoption.isPresent() || adoption.get().getFinished()) {
 			model.addAttribute("message","Petición no existente o ya cerrada.");
 			return listRequests(adoptionId,model);
 		}
 		
 		//Marca como aceptada la peticion seleccionada, rechaza todas las demás pendientes
-		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), PetitionState.PENDIENTE);
+		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), "PENDIENTE");
 		for(AdoptionPetition adoptionPetition: petitions) {
-			if(adoptionPetition.equals(petition.get())) adoptionPetition.setState(PetitionState.ACEPTADO);
-			else adoptionPetition.setState(PetitionState.RECHAZADO);
+			if(adoptionPetition.equals(petition.get())) adoptionPetition.setState("ACEPTADO");
+			else adoptionPetition.setState("RECHAZADO");
 			petitionService.savePetition(adoptionPetition);
 		}
 		
@@ -152,12 +152,12 @@ public class AdoptionController {
 	public String denyPetition(@PathVariable("adoptionId") int adoptionId,@PathVariable("petitionId") int petitionId,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(adoptionId);
 		Optional<AdoptionPetition> petition = petitionService.findById(petitionId);
-		if(!petition.isPresent() || petition.get().getState()!=PetitionState.PENDIENTE || !adoption.isPresent() || adoption.get().getFinished()) {
+		if(!petition.isPresent() || !petition.get().getState().equals("PENDIENTE") || !adoption.isPresent() || adoption.get().getFinished()) {
 			model.addAttribute("message","Petición no existente o ya cerrada.");
 			return listRequests(adoptionId,model);
 		}
 		AdoptionPetition adoptionPetition = petition.get();
-		adoptionPetition.setState(PetitionState.RECHAZADO);
+		adoptionPetition.setState("RECHAZADO");
 		petitionService.savePetition(adoptionPetition);
 		model.addAttribute("message","Petición rechazada.");
 		return listRequests(adoptionId,model);
@@ -180,7 +180,7 @@ public class AdoptionController {
 		}
 		AdoptionPetition petition = new AdoptionPetition();
 		petition.setOwner(getOwner());
-		petition.setState(PetitionState.PENDIENTE);
+		petition.setState("PENDIENTE");
 		petition.setAdoption(adoption.get());
 		model.addAttribute("petition",petition);
 		return "adoptions/petitionForm";

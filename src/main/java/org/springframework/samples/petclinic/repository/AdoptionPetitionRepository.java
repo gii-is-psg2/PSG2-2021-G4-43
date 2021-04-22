@@ -17,9 +17,13 @@ public interface AdoptionPetitionRepository extends Repository<AdoptionPetition,
 	Optional<AdoptionPetition> findById(int id) throws DataAccessException;
 	
 	void save(AdoptionPetition Petition) throws DataAccessException;
+	
+	void delete(AdoptionPetition Petition);
 
 	Collection<AdoptionPetition> findAllByOwner(Owner owner);
 
-	Collection<AdoptionPetition> findAllByAdoptionAndState(Adoption adoption, PetitionState state);
+	Collection<AdoptionPetition> findAllByAdoptionAndState(Adoption adoption, String state);
+
+	Collection<AdoptionPetition> findAllByAdoption(Adoption adoption);
 	
 }
