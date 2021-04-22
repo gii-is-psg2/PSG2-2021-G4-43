@@ -121,7 +121,7 @@ public class AdoptionController {
 	public String acceptPetition(@PathVariable("adoptionId") int adoptionId,@PathVariable("petitionId") int petitionId,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(adoptionId);
 		Optional<AdoptionPetition> petition = petitionService.findById(petitionId);
-		if(!petition.isPresent() || petition.get().getState()!="PENDIENTE" || !adoption.isPresent() || adoption.get().getFinished()) {
+		if(!petition.isPresent() || !petition.get().getState().equals("PENDIENTE") || !adoption.isPresent() || adoption.get().getFinished()) {
 			model.addAttribute("message","Petición no existente o ya cerrada.");
 			return listRequests(adoptionId,model);
 		}
@@ -152,7 +152,7 @@ public class AdoptionController {
 	public String denyPetition(@PathVariable("adoptionId") int adoptionId,@PathVariable("petitionId") int petitionId,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(adoptionId);
 		Optional<AdoptionPetition> petition = petitionService.findById(petitionId);
-		if(!petition.isPresent() || petition.get().getState()!="PENDIENTE" || !adoption.isPresent() || adoption.get().getFinished()) {
+		if(!petition.isPresent() || !petition.get().getState().equals("PENDIENTE") || !adoption.isPresent() || adoption.get().getFinished()) {
 			model.addAttribute("message","Petición no existente o ya cerrada.");
 			return listRequests(adoptionId,model);
 		}
