@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="causes">
 
-    <h2>Información de la cause</h2>
+    <h2>Informaciï¿½n de la cause</h2>
 
 
     <table class="table table-striped">
@@ -44,5 +44,9 @@
        					<spring:param name="causeId" value="${cause.id}"/>
    					</spring:url>
     <a href="${fn:escapeXml(deleteCauseUrl)}" class="btn btn-default">Borrar Causa</a>
+    <spring:url value="/causes/{id}/donations" var="showDonation">
+                        <spring:param name="id" value="${cause.id}"/>
+                </spring:url>
+    <a href="${fn:escapeXml(showDonation)}" class="btn btn-default">Historial de donaciones</a>
 
 </petclinic:layout>
