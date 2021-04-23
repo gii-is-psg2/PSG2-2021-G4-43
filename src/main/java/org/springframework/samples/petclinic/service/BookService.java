@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Book;
 import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.repository.BookRepository;
@@ -51,6 +53,11 @@ public class BookService {
 	@Transactional(readOnly = true)
 	public Collection<Book> findAllByRoomId(int id){
 		return bookRepository.findAllByRoomId(id);
+	}
+	
+	@Transactional(readOnly = true)
+	public Boolean findSameBooks(LocalDate arrivalDate, LocalDate departureDate, Integer petId) throws DataAccessException {
+		return bookRepository.findSameBooks(arrivalDate, departureDate, petId).size()>0;
 	}
 	
 	@Transactional

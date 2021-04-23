@@ -52,6 +52,7 @@ public interface VetRepository extends Repository<Vet, Integer>{
 
 	void delete(Vet vet) throws DataAccessException;
 
+
 	Vet findById(int id) throws DataAccessException;
-	
+
 }
