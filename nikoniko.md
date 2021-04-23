@@ -40,4 +40,5 @@ In the retrospective meeting, the team has a discussion about those results.
 | Day 4         | :smiley:      | :smiley:       | :neutral_face: |  :smiley:      | :smiley:       | :smiley:       |
 | Day 5         | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 | Day 6         | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
+| Day 7         | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 ...
