@@ -21,7 +21,7 @@ public class Book extends BaseEntity {
 
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="arrival_date")
-	private LocalDate arrivalDate; //Fecha con hora?
+	private LocalDate arrivalDate;
 	
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="departure_date")
