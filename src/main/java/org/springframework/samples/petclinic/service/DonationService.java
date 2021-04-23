@@ -49,6 +49,9 @@ public class DonationService {
 		return donationRepository.findByCauseId(id);
 	}
 	
+	public void delete(Donation donation) {
+		donationRepository.delete(donation);
+	}
 	
 }
 

@@ -39,4 +39,3 @@
 	</div>
 </jsp:body>
 </petclinic:layout>
-</petclinic:layout>

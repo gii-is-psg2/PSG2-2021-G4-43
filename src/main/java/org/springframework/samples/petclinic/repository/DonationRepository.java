@@ -24,4 +24,5 @@ public interface DonationRepository extends Repository<Donation, Integer> {
 	@Query("SELECT d FROM Donation d where d.cause.id=:causeId")
 	Collection<Donation> findDonationByCauseId(@Param(value = "causeId") int causeId);
 	
+	void delete(Donation donation);
 }
