@@ -106,7 +106,6 @@ public class CauseController {
         donation.setClient(SecurityContextHolder.getContext().getAuthentication().getName());
         donation.setCause(cause);
         donation.setDate(LocalDate.now());
-        donation.setId(id);
         donationService.saveDonation(donation);
         return "redirect:/causes/"; 
     }

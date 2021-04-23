@@ -2,8 +2,10 @@ package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -27,7 +29,7 @@ public class Donation extends BaseEntity{
 	
     private String client;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "cause_id")
     private Cause cause;
     
