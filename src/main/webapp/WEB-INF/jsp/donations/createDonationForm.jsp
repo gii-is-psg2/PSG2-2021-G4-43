@@ -22,5 +22,10 @@
 	            </div>
 	        </div>
 	    </form:form>
+	    <div class="col-lg-8">
+		<spring:url value="/causes" var="back">
+                	</spring:url>
+    	<a href="${fn:escapeXml(back)}" class="btn btn-default">Atras</a>
+	</div>
     </jsp:body>
 </petclinic:layout>
