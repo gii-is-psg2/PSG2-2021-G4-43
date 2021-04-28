@@ -42,4 +42,6 @@ In the retrospective meeting, the team has a discussion about those results.
 | Day 6         | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 | Day 7         | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 | 26/04/2021    | :persevere:   | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
+| 27/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
+| 28/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :neutral_face: | :smiley:       |
 ...
