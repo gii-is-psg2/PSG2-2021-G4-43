@@ -1,4 +1,4 @@
-# Niko Niko Calendar of team X
+# Niko Niko Calendar of team G4-43
 ## Introduction
 Some interesting links about what a Niko Niko calendar is and opinions about its use in software development:
 
@@ -30,7 +30,8 @@ In the retrospective meeting, the team has a discussion about those results.
 | Day 5         |    :fearful:   (I´m desperate, I need help)        |
 
 
-## Sprint Template
+## Sprint 3
+### Days indexed like "Day x" refer to Daily Scrum days. However, from the day 26/04/2021 onward, days refer to natural days.
 
 | Day           | JesusAparicioOrtiz    | manguecor  | Supremaciu     | fergongar1     | framurpri     | Nendanfito     |
 | ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
@@ -44,4 +45,5 @@ In the retrospective meeting, the team has a discussion about those results.
 | 26/04/2021    | :persevere:   | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 | 27/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 | 28/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :neutral_face: | :smiley:       |
+| 29/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 ...
