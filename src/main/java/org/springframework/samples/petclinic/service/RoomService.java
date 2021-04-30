@@ -51,7 +51,7 @@ public class RoomService {
 					break;
 				}
 			}
-			if(libre==true) {
+			if(libre) {
 				return Optional.of(r);
 			}
 		}

@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/adoptions")
 public class AdoptionController {
-
+	
+	final String createAdoption = "adoptions/createAdoptionForm";
+	final String message = "message";
+	final String pendiente = "PENDIENTE";
+	final String rechazado = "RECHAZADO";
+	
 	@Autowired
 	private AdoptionService adoptionService;
 	
@@ -60,8 +66,7 @@ public class AdoptionController {
 	public Map<Integer, String> getPets() {
 		Owner owner = getOwner();
 		Collection<Pet> pets = owner.getPets();
-		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(x->x.getId(), y->y.getName()));
-		return petsId;
+		return pets.stream().collect(Collectors.toMap(Pet :: getId, Pet :: getName));
 	}
 	
 	@GetMapping()
@@ -75,25 +80,25 @@ public class AdoptionController {
 	public String initCreationAdoptionForm(ModelMap model) {
 		Adoption adoption = new Adoption();
 		model.addAttribute("adoption",adoption);
-		return "adoptions/createAdoptionForm";
+		return createAdoption;
 	}
 
 	@PostMapping("/new")
 	public String processCreationAdoptionForm(@Valid Adoption adoption,BindingResult result,ModelMap model) {
 		if(result.hasErrors()) {
-			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
-			model.addAttribute("message",errores);
-			return "adoptions/createAdoptionForm";
+			List<String> errores = result.getAllErrors().stream().map(ObjectError :: getDefaultMessage).collect(Collectors.toList());
+			model.addAttribute(message,errores);
+			return createAdoption;
 		} else {
 			adoption.setFinished(false);
 			try {
 			adoptionService.saveAdoption(adoption);
-			model.addAttribute("message","La adopcion se ha creado con éxito.");
+			model.addAttribute(message,"La adopcion se ha creado con éxito.");
 			return listAdoptions(model);
 			}
 			catch(PetAlreadyOnAdoptionException e) {
-				model.addAttribute("message","La mascota ya está en adopción.");
-				return "adoptions/createAdoptionForm";
+				model.addAttribute(message,"La mascota ya está en adopción.");
+				return createAdoption;
 			}
 		}
 	}
@@ -102,10 +107,10 @@ public class AdoptionController {
 	public String listRequests(@PathVariable("id") int id,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(id);
 		if(!adoption.isPresent() || adoption.get().getFinished()) {
-			model.addAttribute("message","Solicitud de adopción no existente o ya cerrada.");
+			model.addAttribute(message,"Solicitud de adopción no existente o ya cerrada.");
 			return listAdoptions(model);
 		}
-		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), "PENDIENTE");
+		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), pendiente);
 		model.addAttribute("petitions",petitions);
 		model.addAttribute("adoption",adoption.get());
 		return "adoptions/receivedPetitionsList";
@@ -115,16 +120,16 @@ public class AdoptionController {
 	public String acceptPetition(@PathVariable("adoptionId") int adoptionId,@PathVariable("petitionId") int petitionId,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(adoptionId);
 		Optional<AdoptionPetition> petition = petitionService.findById(petitionId);
-		if(!petition.isPresent() || !petition.get().getState().equals("PENDIENTE") || !adoption.isPresent() || adoption.get().getFinished()) {
-			model.addAttribute("message","Petición no existente o ya cerrada.");
+		if(!petition.isPresent() || !petition.get().getState().equals(pendiente) || !adoption.isPresent() || adoption.get().getFinished()) {
+			model.addAttribute(message,"Petición no existente o ya cerrada.");
 			return listRequests(adoptionId,model);
 		}
 		
 		//Marca como aceptada la peticion seleccionada, rechaza todas las demás pendientes
-		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), "PENDIENTE");
+		Collection<AdoptionPetition> petitions = petitionService.findAllByAdoptionAndState(adoption.get(), pendiente);
 		for(AdoptionPetition adoptionPetition: petitions) {
 			if(adoptionPetition.equals(petition.get())) adoptionPetition.setState("ACEPTADO");
-			else adoptionPetition.setState("RECHAZADO");
+			else adoptionPetition.setState(rechazado);
 			petitionService.savePetition(adoptionPetition);
 		}
 		
@@ -138,7 +143,7 @@ public class AdoptionController {
 		pet.setOwner(petition.get().getOwner());
 		petService.save(pet);
 		
-		model.addAttribute("message","Petición aceptada.");
+		model.addAttribute(message,"Petición aceptada.");
 		return listAdoptions(model);
 	}
 	
@@ -146,14 +151,14 @@ public class AdoptionController {
 	public String denyPetition(@PathVariable("adoptionId") int adoptionId,@PathVariable("petitionId") int petitionId,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(adoptionId);
 		Optional<AdoptionPetition> petition = petitionService.findById(petitionId);
-		if(!petition.isPresent() || !petition.get().getState().equals("PENDIENTE") || !adoption.isPresent() || adoption.get().getFinished()) {
-			model.addAttribute("message","Petición no existente o ya cerrada.");
+		if(!petition.isPresent() || !petition.get().getState().equals(pendiente) || !adoption.isPresent() || adoption.get().getFinished()) {
+			model.addAttribute(message,"Petición no existente o ya cerrada.");
 			return listRequests(adoptionId,model);
 		}
 		AdoptionPetition adoptionPetition = petition.get();
-		adoptionPetition.setState("RECHAZADO");
+		adoptionPetition.setState(rechazado);
 		petitionService.savePetition(adoptionPetition);
-		model.addAttribute("message","Petición rechazada.");
+		model.addAttribute(message,"Petición rechazada.");
 		return listRequests(adoptionId,model);
 	}
 	
@@ -169,12 +174,12 @@ public class AdoptionController {
 	public String requestAdoptionInitForm(@PathVariable("id") int id,ModelMap model) {
 		Optional<Adoption> adoption = adoptionService.findById(id);
 		if(!adoption.isPresent() || adoption.get().getFinished()) {
-			model.addAttribute("message","Solicitud de adopción no existente o ya cerrada.");
+			model.addAttribute(message,"Solicitud de adopción no existente o ya cerrada.");
 			return listAdoptions(model);
 		}
 		AdoptionPetition petition = new AdoptionPetition();
 		petition.setOwner(getOwner());
-		petition.setState("PENDIENTE");
+		petition.setState(pendiente);
 		petition.setAdoption(adoption.get());
 		model.addAttribute("petition",petition);
 		return "adoptions/petitionForm";
@@ -183,12 +188,12 @@ public class AdoptionController {
 	@PostMapping("/petitions/request/{id}")
 	public String requestAdoption(@PathVariable("id") int id,@Valid AdoptionPetition petition,BindingResult result,ModelMap model) {
 		if(result.hasErrors()) {
-			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
-			model.addAttribute("message",errores);
+			List<String> errores = result.getAllErrors().stream().map(ObjectError :: getDefaultMessage).collect(Collectors.toList());
+			model.addAttribute(message,errores);
 			return requestAdoptionInitForm(id,model);
 		} else {
 			petitionService.savePetition(petition);
-			model.addAttribute("message","La petición se ha creado con éxito.");
+			model.addAttribute(message,"La petición se ha creado con éxito.");
 			return listAdoptions(model);
 		}
 	}

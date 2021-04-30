@@ -14,9 +14,9 @@ public interface AdoptionRepository extends Repository<Adoption, Integer>{
 	
 	Optional<Adoption> findById(int id) throws DataAccessException;
 	
-	void save(Adoption Adoption) throws DataAccessException;
+	void save(Adoption adoption) throws DataAccessException;
 	
-	void delete(Adoption Adoption);
+	void delete(Adoption adoption);
 
 	Collection<Adoption> findAllByFinishedEquals(boolean b);
 

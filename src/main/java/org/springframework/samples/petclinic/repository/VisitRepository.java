@@ -44,9 +44,6 @@ public interface VisitRepository extends Repository<Visit, Integer> {
 
 	List<Visit> findByPetId(Integer petId);
 	
-	/*@Query("SELECT visit FROM Visit visit WHERE visit.id =:id")
-	public Visit findVisitById(@Param("id") int id);*/
-	
 	Visit findById(int id) throws DataAccessException;
 	
 	void delete(Visit visit) throws DataAccessException;

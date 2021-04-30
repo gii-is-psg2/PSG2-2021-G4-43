@@ -13,9 +13,9 @@ public interface CauseRepository extends Repository<Cause, Integer>{
 	
 	Optional<Cause> findById(int id) throws DataAccessException;
 	
-	void save(Cause Cause) throws DataAccessException;
+	void save(Cause cause) throws DataAccessException;
 	
-	void delete(Cause Cause);
+	void delete(Cause cause);
 	
 	
 }

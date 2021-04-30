@@ -31,21 +31,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		String admin = "admin";
+		String owner = "owner";
 		http.authorizeRequests()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/books/**").hasAnyAuthority("owner","admin")
-				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")		
+				.antMatchers("/admin/**").hasAnyAuthority(admin)
+				.antMatchers("/books/**").hasAnyAuthority(owner,admin)
+				.antMatchers("/owners/**").hasAnyAuthority(owner,admin)		
 				.antMatchers("/causes").permitAll()
-				.antMatchers("/causes/new").hasAnyAuthority("owner","admin")
+				.antMatchers("/causes/new").hasAnyAuthority(owner,admin)
 				.antMatchers("/causes/*").permitAll()
-				.antMatchers("/causes/*/delete").hasAnyAuthority("owner","admin")
-				.antMatchers("/causes/*/donations/new").hasAnyAuthority("owner","admin")
-				.antMatchers("/causes/*/donations").hasAnyAuthority("owner","admin")
-				.antMatchers("/donations").hasAnyAuthority("owner","admin")
-				.antMatchers("/adoptions/**").hasAnyAuthority("owner")
+				.antMatchers("/causes/*/delete").hasAnyAuthority(owner,admin)
+				.antMatchers("/causes/*/donations/new").hasAnyAuthority(owner,admin)
+				.antMatchers("/causes/*/donations").hasAnyAuthority(owner,admin)
+				.antMatchers("/donations").hasAnyAuthority(owner,admin)
+				.antMatchers("/adoptions/**").hasAnyAuthority(owner)
 				.antMatchers("/vets/**").authenticated()
 				.antMatchers("/vets.xml").authenticated()
 				.anyRequest().denyAll()

@@ -50,8 +50,6 @@ public interface PetRepository extends Repository<Pet, Integer> {
 	 * @throws org.springframework.dao.DataRetrievalFailureException if not found
 	 */
 	Pet findById(int id) throws DataAccessException;
-	//@Query("SELECT pet FROM Pet pet WHERE pet.id =:id")
-	//public Pet findById(@Param("id") int id);
 
 	/**
 	 * Save a <code>Pet</code> to the data store, either inserting or updating it.

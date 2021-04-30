@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -30,7 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/books")
 public class BookController {
-
+	
+	final String createBook = "books/createBookForm";
+	final String message = "message";
+	
 	@Autowired
 	private BookService bookService;
 	
@@ -61,10 +65,10 @@ public class BookController {
 			throw new Exception();
 		}
 		Collection<Pet> pets = petService.findPetsByOwner(owner.get().getUser().getUsername());
-		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(x->x.getId(), y->y.getName()));
+		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(Pet :: getId, Pet :: getName));
 		model.addAttribute("book",book);
 		model.addAttribute("pets",petsId);
-		return "books/createBookForm";
+		return createBook;
 	}
 
 	@PostMapping("/new")
@@ -74,26 +78,31 @@ public class BookController {
 			throw new Exception();
 		}
 		Collection<Pet> pets = petService.findPetsByOwner(owner.get().getUser().getUsername());
-		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(x->x.getId(), y->y.getName()));
+		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(Pet :: getId, Pet :: getName));
 		model.addAttribute("pets",petsId);
 		
 		if(result.hasErrors()) {
-			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
-			model.addAttribute("message",errores);
-			return "books/createBookForm";
+			List<String> errores = result.getAllErrors().stream().map(ObjectError :: getDefaultMessage).collect(Collectors.toList());
+			model.addAttribute(message,errores);
+			return createBook;
 		} else {
 			try {
-				if(!this.bookService.findSameBooks(book.getArrivalDate(), book.getDepartureDate(), book.getPet().getId())) {
-					bookService.save(book);
-					model.addAttribute("message","La reserva se ha realizado con éxito.");
-					return listBooks(model);
-				}else {
-					model.addAttribute("message","Ya existe una reserva para esta mascota en la fecha indicada");
-					return "books/createBookForm";
+				try {
+					Boolean sameBooks = !this.bookService.findSameBooks(book.getArrivalDate(), book.getDepartureDate(), book.getPet().getId());
+					if(sameBooks) {
+						bookService.save(book);
+						model.addAttribute(message,"La reserva se ha realizado con éxito.");
+						return listBooks(model);
+					}else {
+						model.addAttribute(message,"Ya existe una reserva para esta mascota en la fecha indicada");
+						return createBook;
+					}
+				}catch(Exception e){
+					throw e;
 				}
 			} catch (NoRoomAvailableException e) {
-				model.addAttribute("message","Lo sentimos, no tenemos una habitación libre en la fecha indicada.");
-				return "books/createBookForm";
+				model.addAttribute(message,"Lo sentimos, no tenemos una habitación libre en la fecha indicada.");
+				return createBook;
 			}
 		}
 	}
@@ -102,11 +111,11 @@ public class BookController {
 	public String initCreationBookForm(@PathVariable("id") int id, ModelMap model) {
 		Optional<Book> book = bookService.findById(id);
 		if(!book.isPresent()) {
-			model.addAttribute("message","La reserva que intenta borrar no existe.");
+			model.addAttribute(message,"La reserva que intenta borrar no existe.");
 			return listBooks(model);
 		}
 		bookService.delete(book.get());
-		model.addAttribute("message","La reserva se ha cancelado con exito");
+		model.addAttribute(message,"La reserva se ha cancelado con exito");
 		return listBooks(model);
 	}
 
