@@ -82,20 +82,20 @@ class AdoptionServiceTests {
 	@Test
 	void shouldFindAllAdoptions() {
 		Collection<Adoption> adoptions = this.adoptionService.findAll();
-		assertThat(adoptions.size()).isEqualTo(5);
+		assertThat(adoptions).hasSize(5);
 	}	
 
 	@Test
 	void shouldFindAdoptionWithCorrectId() {
 		Adoption adoption = this.adoptionService.findById(1).get();
 		assertThat(adoption.getPet().getId()).isEqualTo(1);
-		assertThat(adoption.getFinished()).isEqualTo(true);
+		assertThat(adoption.getFinished()).isTrue();
 
 	}
 
 	@Test
 	@Transactional
-	public void shouldInsertAdoptionIntoDatabaseAndGenerateId() {
+	void shouldInsertAdoptionIntoDatabaseAndGenerateId() {
 		int found = adoptionService.findAll().size();
 
 		Adoption adoption = new Adoption();
@@ -107,7 +107,7 @@ class AdoptionServiceTests {
 		} catch (PetAlreadyOnAdoptionException e) {
             Logger.getLogger(AdoptionServiceTests.class.getName()).log(Level.SEVERE, null, e);
 		}
-		assertThat(adoptionService.findAll().size()).isEqualTo(found + 1);
+		assertThat(adoptionService.findAll()).hasSize(found + 1);
 		// checks that id has been generated
 		assertThat(adoption.getId()).isNotNull();
 	}
@@ -128,12 +128,12 @@ class AdoptionServiceTests {
 	@Test
 	void shouldFindAllPendientes() {
 		Collection<Adoption> adoptions = this.adoptionService.findAllPendientes();
-		assertThat(adoptions.size()).isEqualTo(3);
+		assertThat(adoptions).hasSize(3);
 	}	
 	
 	@Test
 	@Transactional
-	public void shouldThrowExceptionInsertingAdoptionsWithTheSamePet() {
+	void shouldThrowExceptionInsertingAdoptionsWithTheSamePet() {
 		int found = adoptionService.findAll().size();
 
 		Adoption adoption = new Adoption();

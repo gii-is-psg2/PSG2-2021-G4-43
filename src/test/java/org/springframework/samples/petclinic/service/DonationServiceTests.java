@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class DonationServiceTests {
+class DonationServiceTests {
 	
 	@Autowired
 	protected DonationService donationService;
@@ -26,7 +26,7 @@ public class DonationServiceTests {
 	@Test
 	void shouldFindAll() {
 		Collection<Donation> donations = this.donationService.findAll();
-		assertThat(donations.size()).isEqualTo(1);
+		assertThat(donations).hasSize(1);
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class DonationServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldInsertDonation() {
+	void shouldInsertDonation() {
 		int found = donationService.findAll().size();
 		
 		Donation donation = new Donation();
@@ -50,12 +50,12 @@ public class DonationServiceTests {
 		
 		this.donationService.saveDonation(donation);
 		assertThat(donation.getId()).isNotNull();
-		assertThat(donationService.findAll().size()).isEqualTo(found + 1);
+		assertThat(donationService.findAll()).hasSize(found + 1);
 	}
 	
 	@Test
 	void shouldFindDonationByCauseId() {
 		Collection<Donation> donation = this.donationService.findDonationsByCauseId(1);
-		assertThat(donation.size()).isEqualTo(1);
+		assertThat(donation).hasSize(1);
 	}
 }

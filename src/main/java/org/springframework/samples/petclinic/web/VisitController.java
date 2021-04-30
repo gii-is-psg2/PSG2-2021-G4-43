@@ -39,6 +39,8 @@ import org.springframework.web.bind.annotation.*;
 public class VisitController {
 
 	private final PetService petService;
+	
+	private final String ownerUrl = "redirect:/owners/{ownerId}";
 
 	@Autowired
 	public VisitController(PetService petService) {
@@ -80,7 +82,7 @@ public class VisitController {
 		}
 		else {
 			this.petService.saveVisit(visit);
-			return "redirect:/owners/{ownerId}";
+			return ownerUrl;
 		}
 	}
 
@@ -96,7 +98,7 @@ public class VisitController {
     	Pet pet = this.petService.findPetById(petId);
     	petService.deletePet(pet);
 		model.addAttribute("message", "PET BORRADO CON EXITO");
-		return "redirect:/owners/{ownerId}";
+		return ownerUrl;
 	}
 	
 	@GetMapping(value = "/owners/{ownerId}/pets/{petId}/visits/{visitId}/delete")
@@ -104,6 +106,6 @@ public class VisitController {
     	Visit visit = this.petService.findVisitByVisitId(visitId);
     	petService.deleteVisit(visit);
 		model.addAttribute("message", "VISITA BORRADA CON EXITO");
-		return "redirect:/owners/{ownerId}";
+		return ownerUrl;
 	}
 }
