@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adoption;
 import org.springframework.samples.petclinic.model.AdoptionPetition;
-import org.springframework.samples.petclinic.model.PetitionState;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.service.AdoptionPetitionService;
@@ -50,8 +49,11 @@ public class AdoptionController {
 	public Owner getOwner() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-		Owner owner = ownerService.findOwner(username).get();
-		return owner;
+		Optional<Owner> owner = ownerService.findOwner(username);
+		if(owner.isPresent())
+			return owner.get();
+		else
+			return null;
 	}
 	
 	@ModelAttribute("pets")
@@ -68,14 +70,6 @@ public class AdoptionController {
 		model.addAttribute("adoptions",adoptions);
 		return "adoptions/adoptionsList";
 	}
-	
-	/* De momento no es necesario
-	@GetMapping("/{id}")
-	public String showOwner(@PathVariable("id") int id,ModelMap model) {
-		Optional<Adoption> adoption = adoptionService.findById(id);
-		model.addAttribute("adoption",adoption.get());
-		return "adoptions/adoptionDetails";
-	}*/
 
 	@GetMapping("/new")
 	public String initCreationAdoptionForm(ModelMap model) {
@@ -198,20 +192,6 @@ public class AdoptionController {
 			return listAdoptions(model);
 		}
 	}
-	
-	/* De momento, no es necesario
-	@GetMapping("/{id}/delete")
-	public String initCreationadoptionForm(@PathVariable("id") int id, ModelMap model) {
-		Optional<Adoption> adoption = adoptionService.findById(id);
-		if(!adoption.isPresent()) {
-			model.addAttribute("message","La adopcion que intenta borrar no existe.");
-			return listAdoptions(model);
-		}
-		adoptionService.delete(adoption.get());
-		model.addAttribute("message","La adopción se ha borrado con éxito");
-		return listAdoptions(model);
-	}
-	*/
 
 }
 

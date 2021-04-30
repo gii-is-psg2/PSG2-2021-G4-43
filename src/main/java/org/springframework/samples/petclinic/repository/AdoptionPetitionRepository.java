@@ -8,7 +8,6 @@ import org.springframework.data.repository.Repository;
 import org.springframework.samples.petclinic.model.Adoption;
 import org.springframework.samples.petclinic.model.AdoptionPetition;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.PetitionState;
 
 public interface AdoptionPetitionRepository extends Repository<AdoptionPetition, Integer>{
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Adoption;
 import org.springframework.samples.petclinic.model.AdoptionPetition;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.PetitionState;
 import org.springframework.samples.petclinic.repository.AdoptionPetitionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
