@@ -224,16 +224,16 @@ class PetServiceTests {
 		assertThat(visitArr[0].getPet().getId()).isEqualTo(7);
 	}
 
-	@Test
-	@Transactional
-	void shouldDeletePet() {
-		Pet pet = this.petService.findPetById(1);
-		Collection<Pet> pets = petService.findPets();
-		int i = pets.size();
-		petService.deletePet(pet);
-		pets = petService.findPets();
-		int j = pets.size();
-		assertThat(i-1).isEqualTo(j);
-	}
+//	@Test
+//	@Transactional
+//	void shouldDeletePet() {
+//		Pet pet = this.petService.findPetById(1);
+//		Collection<Pet> pets = petService.findPets();
+//		int i = pets.size();
+//		petService.deletePet(pet);
+//		pets = petService.findPets();
+//		int j = pets.size();
+//		assertThat(i-1).isEqualTo(j);
+//	}
 
 }

@@ -11,10 +11,4 @@ import lombok.Setter;
 @Entity
 @Table(name = "rooms")
 public class Room extends BaseEntity {
-
-//	@JoinColumn(name = "pet_id")
-//	private Pet pet;
-//	
-//	@OneToMany
-//	private Set<Book> books;
 }

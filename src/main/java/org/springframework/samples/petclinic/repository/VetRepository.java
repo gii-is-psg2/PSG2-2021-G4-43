@@ -20,7 +20,6 @@ import java.util.Collection;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 
@@ -51,5 +50,8 @@ public interface VetRepository extends Repository<Vet, Integer>{
 	public Collection<Specialty> findSpecialty();
 
 	void delete(Vet vet) throws DataAccessException;
+
+
+	Vet findById(int id) throws DataAccessException;
 
 }

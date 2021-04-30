@@ -37,6 +37,7 @@ public class RoomService {
 		roomRepository.save(room);
 	}
 	
+	@Transactional
 	public Optional<Room> getHabitacionLibre(LocalDate arrival, LocalDate departure,Pet pet){
 		for(Room r : findAll()) {
 			Boolean libre = true;
@@ -50,7 +51,7 @@ public class RoomService {
 					break;
 				}
 			}
-			if(libre==true) {
+			if(libre) {
 				return Optional.of(r);
 			}
 		}

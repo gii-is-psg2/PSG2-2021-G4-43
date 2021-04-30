@@ -19,9 +19,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
-import org.springframework.samples.petclinic.model.PetType;
 import org.springframework.samples.petclinic.model.Specialty;
 import org.springframework.samples.petclinic.model.Vet;
 import org.springframework.samples.petclinic.repository.VetRepository;
@@ -52,11 +49,7 @@ public class VetService {
 	
 	@Transactional
 	public void saveVet(Vet vet) throws DataAccessException {
-
-		System.out.println("hoka");
 		vetRepository.save(vet);
-		/*userService.saveUser(vet.getUser());
-		authoritiesService.saveAuthorities(vet.getUser().getUsername(), "vet");*/
 	}	
 
 	
@@ -65,12 +58,12 @@ public class VetService {
 		return vetRepository.findById(id);
 	}
 	
-	@Transactional
+	@Transactional(readOnly = true)
 	public Collection<Specialty> findSpecialty() throws DataAccessException {
 		return vetRepository.findSpecialty();
 	}
   
-  @Transactional
+	@Transactional
 	public void deleteVet(Vet vet) throws DataAccessException {
 		vetRepository.delete(vet);
 	}
