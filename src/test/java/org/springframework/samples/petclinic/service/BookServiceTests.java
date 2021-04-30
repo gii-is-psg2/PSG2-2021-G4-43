@@ -42,24 +42,24 @@ class BookServiceTests {
 	@Test
 	void shouldFindAllByOwner() {
 		Collection<Book> books = this.bookService.findAllByOwner("owner1");
-		assertThat(books.size()).isEqualTo(1);
+		assertThat(books).hasSize(1);
 
 		books = this.bookService.findAllByOwner("owner2");
-		assertThat(books.isEmpty()).isTrue();
+		assertThat(books).isEmpty();
 	}
 	
 	@Test
 	void shouldFindAllByRoomId() {
 		Collection<Book> books = this.bookService.findAllByRoomId(1);
-		assertThat(books.size()).isEqualTo(1);
+		assertThat(books).hasSize(1);
 
 		books = this.bookService.findAllByRoomId(5);
-		assertThat(books.isEmpty()).isTrue();
+		assertThat(books).isEmpty();
 	}
 
 	@Test
 	@Transactional
-	public void shouldInsertBook() throws NoRoomAvailableException{
+	void shouldInsertBook() throws NoRoomAvailableException{
 		Collection<Book> books = this.bookService.findAll();
 		int found = books.size();
 
@@ -79,14 +79,14 @@ class BookServiceTests {
 		book.setRoom(room);
 		
 		this.bookService.save(book);
-        assertThat(book.getId().longValue()).isNotEqualTo(0);
-        assertThat(bookService.findAll().size()).isEqualTo(found + 1);
+        assertThat(book.getId().longValue()).isNotZero();
+        assertThat(bookService.findAll()).hasSize(found + 1);
 	}
 	
 	
 	@Test
 	@Transactional
-	public void shouldDeleteBook() {
+	void shouldDeleteBook() {
 		Collection<Book> books = this.bookService.findAll();
 		int booksbefore = books.size();
 		
@@ -94,6 +94,6 @@ class BookServiceTests {
 		this.bookService.delete(book);
 		
 		books = this.bookService.findAll();
-		assertThat(books.size()).isEqualTo(booksbefore - 1);
+		assertThat(books).hasSize(booksbefore - 1);
 	}
 }

@@ -87,7 +87,7 @@ class AdoptionPetitionServiceTests {
 	@Test
 	void shouldFindAllAdoptionPetitions() {
 		Collection<AdoptionPetition> petitions = this.adoptionPetitionService.findAll();
-		assertThat(petitions.size()).isEqualTo(3);
+		assertThat(petitions).hasSize(3);
 	}	
 
 	@Test
@@ -99,7 +99,7 @@ class AdoptionPetitionServiceTests {
 
 	@Test
 	@Transactional
-	public void shouldInsertAdoptionPetitionIntoDatabaseAndGenerateId() {
+	void shouldInsertAdoptionPetitionIntoDatabaseAndGenerateId() {
 		int found = adoptionPetitionService.findAll().size();
 
 		AdoptionPetition petition = new AdoptionPetition();
@@ -110,7 +110,7 @@ class AdoptionPetitionServiceTests {
 		petition.setOwner(owner);
 		petition.setState("PENDIENTE");
 		adoptionPetitionService.savePetition(petition);
-		assertThat(adoptionPetitionService.findAll().size()).isEqualTo(found + 1);
+		assertThat(adoptionPetitionService.findAll()).hasSize(found + 1);
 		// checks that id has been generated
 		assertThat(petition.getId()).isNotNull();
 	}
@@ -132,7 +132,7 @@ class AdoptionPetitionServiceTests {
 		Owner owner = ownerService.findOwnerById(1);
 		Collection<AdoptionPetition> petitions = 
 				this.adoptionPetitionService.findAllByOwner(owner);
-		assertThat(petitions.size()).isEqualTo(1);
+		assertThat(petitions).hasSize(1);
 	}	
 
 	@Test
@@ -141,7 +141,7 @@ class AdoptionPetitionServiceTests {
 		String state = "RECHAZADO";
 		Collection<AdoptionPetition> petitions = 
 				this.adoptionPetitionService.findAllByAdoptionAndState(adoption, state);
-		assertThat(petitions.size()).isEqualTo(1);
+		assertThat(petitions).hasSize(1);
 	}
 
 	@Test
@@ -149,6 +149,6 @@ class AdoptionPetitionServiceTests {
 		Adoption adoption = adoptionService.findById(2).get();
 		Collection<AdoptionPetition> petitions = 
 				this.adoptionPetitionService.findAllByAdoption(adoption);
-		assertThat(petitions.size()).isEqualTo(1);
+		assertThat(petitions).hasSize(1);
 	}	
 }

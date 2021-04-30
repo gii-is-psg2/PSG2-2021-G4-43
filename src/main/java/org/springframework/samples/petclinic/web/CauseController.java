@@ -32,6 +32,10 @@ public class CauseController {
 	@Autowired
     private DonationService donationService;
 	
+	final String message = "message";
+	
+	final String createDonationUrl = "/donations/createDonationForm";
+	
 	@GetMapping()
 	public String listCauses(ModelMap model) {
 		Collection<Cause> causes = causeService.findAll();
@@ -60,25 +64,25 @@ public class CauseController {
 	public String processCreationCauseForm(@Valid Cause cause,BindingResult result,ModelMap model) {
 		if(result.hasErrors()) {
 			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
-			model.addAttribute("message",errores);
+			model.addAttribute(message,errores);
 			return "causes/createCauseForm";
 		} else {
 			cause.setBudgetAchieved(0);
 			causeService.saveCause(cause);
-			model.addAttribute("message","La causa se ha creado con éxito.");
+			model.addAttribute(message,"La causa se ha creado con éxito.");
 			return listCauses(model);
 		}
 	}
 	
 	@GetMapping("/{id}/delete")
-	public String initCreationcauseForm(@PathVariable("id") int id, ModelMap model) {
+	public String initDeleteCauseForm(@PathVariable("id") int id, ModelMap model) {
 		Optional<Cause> cause = causeService.findById(id);
 		if(!cause.isPresent()) {
-			model.addAttribute("message","La causa que intenta borrar no existe.");
+			model.addAttribute(message,"La causa que intenta borrar no existe.");
 			return listCauses(model);
 		}
 		causeService.delete(cause.get());
-		model.addAttribute("message","La causa se ha borrado con éxito");
+		model.addAttribute(message,"La causa se ha borrado con éxito");
 		return listCauses(model);
 	}
 	
@@ -88,20 +92,19 @@ public class CauseController {
 		if(!causa.isPresent()) {
 			throw new Exception();
 		}
-		Cause cause = causa.get();
-    	if (cause.isClosed()){
-    		model.addAttribute("message","Ya se ha recaudado lo necesario para esta causa por lo que no son necesarias más donaciones");
+    	if (causa.isPresent() && causa.get().isClosed()){
+    		model.addAttribute(message,"Ya se ha recaudado lo necesario para esta causa por lo que no son necesarias más donaciones");
     		return listCauses(model);
     	} 
         Donation donation = new Donation();
         model.addAttribute("donation", donation);
-        return "/donations/createDonationForm";
+        return createDonationUrl;
     }
 
     @PostMapping(value = "/{id}/donations/new")
     public String processCreationForm(@PathVariable("id") int id,@Valid Donation donation, BindingResult result,ModelMap model) throws Exception {
         if (result.hasErrors()) {
-            return "/donations/createDonationForm";
+            return createDonationUrl;
         }
         Optional<Cause> causa = causeService.findById(id);
         if(!causa.isPresent()) {
@@ -109,8 +112,8 @@ public class CauseController {
 		}
 		Cause cause = causa.get();
         if (donation.getAmount() > (cause.getBudgetTarget()-cause.getBudgetAchieved())) {
-        	model.addAttribute("message","La cantidad que desea donar es mayor que el objetivo de la donación");
-    		return "/donations/createDonationForm";
+        	model.addAttribute(message,"La cantidad que desea donar es mayor que el objetivo de la donación");
+    		return createDonationUrl;
         }
         cause.setBudgetAchieved(cause.getBudgetAchieved()+donation.getAmount());
         causeService.saveCause(cause);

@@ -31,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +52,8 @@ public class VetController {
 	private final VetService vetService;
 
 	private final SpecialtyRepository specialtyRepository;
+	
+	private final String message = "message";
 
 	@Autowired
 	public VetController(VetService clinicService, SpecialtyRepository specialtyRepository) {
@@ -91,13 +94,13 @@ public class VetController {
 	@PostMapping(value = "/vets/new")
 	public String processVetCreationForm(@Valid Vet vet, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
-			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
-			model.addAttribute("message",errores);
+			List<String> errores = result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList());
+			model.addAttribute(message,errores);
 			return initCreationVetForm(model);
 		}
 		//creating owner, user and authorities
 		this.vetService.saveVet(vet);
-		model.addAttribute("message","Vet creado con éxito");
+		model.addAttribute(message,"Vet creado con éxito");
 		return "redirect:/vets/";
 	}
 	
@@ -114,8 +117,8 @@ public class VetController {
 	public String processUpdateVetForm(@Valid Vet vet, BindingResult result, ModelMap model,
 			@PathVariable("id") int id) {
 		if (result.hasErrors()) {
-			List<String> errores = result.getAllErrors().stream().map(x->x.getDefaultMessage()).collect(Collectors.toList());
-			model.addAttribute("message",errores);
+			List<String> errores = result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.toList());
+			model.addAttribute(message,errores);
 			return initUpdateVetForm(id,model);
 		}
 		this.vetService.saveVet(vet);
@@ -134,7 +137,7 @@ public class VetController {
 	public String deleteVet(@PathVariable("vetId") int vetId, Model model){
 			Vet vet = vetService.findVetById(vetId);
 			vetService.deleteVet(vet);
-			model.addAttribute("message", "VETERINARIO BORRADO CON EXITO");
+			model.addAttribute(message, "VETERINARIO BORRADO CON EXITO");
 			return "redirect:/vets";
 	}
 
