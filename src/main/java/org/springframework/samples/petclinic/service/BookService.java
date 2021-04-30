@@ -40,7 +40,7 @@ public class BookService {
 			throw new NoRoomAvailableException();
 		}
 		else {
-			book.setRoom(roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet()).get());
+			book.setRoom(room.get());
 			bookRepository.save(book);
 		}
 	}

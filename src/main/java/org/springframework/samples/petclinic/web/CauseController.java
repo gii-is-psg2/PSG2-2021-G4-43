@@ -40,8 +40,11 @@ public class CauseController {
 	}
 	
 	@GetMapping("/{id}")
-	public String showOwner(@PathVariable("id") int id,ModelMap model) {
+	public String showOwner(@PathVariable("id") int id,ModelMap model) throws Exception {
 		Optional<Cause> cause = causeService.findById(id);
+		if(!cause.isPresent()) {
+			throw new Exception();
+		}
 		model.addAttribute("cause",cause.get());
 		return "causes/causeDetails";
 	}
@@ -80,9 +83,13 @@ public class CauseController {
 	}
 	
 	@GetMapping(value = "/{id}/donations/new")
-    public String initCreationForm(@PathVariable("id") int id,ModelMap model) {
-    	Cause causa = causeService.findById(id).get();
-    	if (causa.isClosed()){
+    public String initCreationForm(@PathVariable("id") int id,ModelMap model) throws Exception {
+    	Optional<Cause> causa = causeService.findById(id);
+		if(!causa.isPresent()) {
+			throw new Exception();
+		}
+		Cause cause = causa.get();
+    	if (cause.isClosed()){
     		model.addAttribute("message","Ya se ha recaudado lo necesario para esta causa por lo que no son necesarias más donaciones");
     		return listCauses(model);
     	} 
@@ -92,11 +99,15 @@ public class CauseController {
     }
 
     @PostMapping(value = "/{id}/donations/new")
-    public String processCreationForm(@PathVariable("id") int id,@Valid Donation donation, BindingResult result,ModelMap model) {
+    public String processCreationForm(@PathVariable("id") int id,@Valid Donation donation, BindingResult result,ModelMap model) throws Exception {
         if (result.hasErrors()) {
             return "/donations/createDonationForm";
         }
-        Cause cause = causeService.findById(id).get();
+        Optional<Cause> causa = causeService.findById(id);
+        if(!causa.isPresent()) {
+			throw new Exception();
+		}
+		Cause cause = causa.get();
         if (donation.getAmount() > (cause.getBudgetTarget()-cause.getBudgetAchieved())) {
         	model.addAttribute("message","La cantidad que desea donar es mayor que el objetivo de la donación");
     		return "/donations/createDonationForm";

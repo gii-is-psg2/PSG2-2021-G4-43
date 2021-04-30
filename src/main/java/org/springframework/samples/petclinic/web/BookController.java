@@ -54,9 +54,12 @@ public class BookController {
 	}
 
 	@GetMapping("/new")
-	public String initCreationBookForm(ModelMap model) {
+	public String initCreationBookForm(ModelMap model) throws Exception {
 		Book book = new Book();
 		Optional<Owner> owner = ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+		if(!owner.isPresent()) {
+			throw new Exception();
+		}
 		Collection<Pet> pets = petService.findPetsByOwner(owner.get().getUser().getUsername());
 		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(x->x.getId(), y->y.getName()));
 		model.addAttribute("book",book);
@@ -65,8 +68,11 @@ public class BookController {
 	}
 
 	@PostMapping("/new")
-	public String processCreationBookForm(@Valid Book book,BindingResult result,ModelMap model) {
+	public String processCreationBookForm(@Valid Book book,BindingResult result,ModelMap model) throws Exception {
 		Optional<Owner> owner = ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName());
+		if(!owner.isPresent()) {
+			throw new Exception();
+		}
 		Collection<Pet> pets = petService.findPetsByOwner(owner.get().getUser().getUsername());
 		Map<Integer,String> petsId = pets.stream().collect(Collectors.toMap(x->x.getId(), y->y.getName()));
 		model.addAttribute("pets",petsId);
