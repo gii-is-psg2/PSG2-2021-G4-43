@@ -67,16 +67,6 @@ class BookControllerTests {
 		.andExpect(model().attributeExists("books"))
 		.andExpect(view().name("books/booksList"));
     }
-
-	@WithMockUser(value = "spring")
-    @Test
-    @Disabled
-	void testInitCreationBookForm() throws Exception {
-		mockMvc.perform(get("/books/new"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("book")) //Attribute 'book' does not exist
-		.andExpect(view().name("books/createBookForm"));
-	}
 	
 	@WithMockUser(value = "spring")
     @Test
@@ -87,19 +77,6 @@ class BookControllerTests {
 				.param("departureDate", "2021-01-07")
 				.param("pet", "Leo"))
 				.andExpect(status().isOk());
-	}
-	
-	
-	@WithMockUser(value = "spring")
-    @Test
-    @Disabled
-	void testProcessCreationFormHasErrors() throws Exception {
-		mockMvc.perform(post("/books/new")
-							.with(csrf())
-							.param("arrivalDate", "")) //Tengo que forzar que arrivalDate sea null
-				.andExpect(model().attributeHasErrors("book"))
-				.andExpect(status().isOk())
-				.andExpect(view().name("books/createBookForm"));
 	}
 
 	@WithMockUser(value = "spring")

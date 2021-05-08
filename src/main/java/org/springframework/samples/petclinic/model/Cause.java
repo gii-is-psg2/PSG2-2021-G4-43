@@ -28,11 +28,7 @@ public class Cause extends BaseEntity {
 	private String ong;
 	
 	public Boolean isClosed() {
-		if (this.getBudgetAchieved() >= this.getBudgetTarget()) {
-			return true;
-		}
-	return false;
-				
+		return this.getBudgetAchieved() >= this.getBudgetTarget();
 	}
 
 	public String getName() {

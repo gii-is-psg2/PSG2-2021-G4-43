@@ -26,9 +26,6 @@ public class Book extends BaseEntity {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	@Column(name="departure_date")
 	private LocalDate departureDate;
-	
-	//@JoinColumn(name = "owner_id")
-	//private Owner owner;
 
 	@ManyToOne
 	@JoinColumn(name = "pet_id")

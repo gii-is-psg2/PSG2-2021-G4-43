@@ -40,7 +40,7 @@ public class BookService {
 			throw new NoRoomAvailableException();
 		}
 		else {
-			book.setRoom(roomService.getHabitacionLibre(book.getArrivalDate(),book.getDepartureDate(),book.getPet()).get());
+			book.setRoom(room.get());
 			bookRepository.save(book);
 		}
 	}
@@ -57,7 +57,7 @@ public class BookService {
 	
 	@Transactional(readOnly = true)
 	public Boolean findSameBooks(LocalDate arrivalDate, LocalDate departureDate, Integer petId) throws DataAccessException {
-		return bookRepository.findSameBooks(arrivalDate, departureDate, petId).size()>0;
+		return !bookRepository.findSameBooks(arrivalDate, departureDate, petId).isEmpty();
 	}
 	
 	@Transactional

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-public class CauseServiceTests {
+class CauseServiceTests {
 	
 	@Autowired
 	protected CauseService causeService;
@@ -21,7 +21,7 @@ public class CauseServiceTests {
 	@Test
 	void shouldFindAll() {
 		Collection<Cause> causes = this.causeService.findAll();
-		assertThat(causes.size()).isEqualTo(6);
+		assertThat(causes).hasSize(6);
 	}
 	
 	@Test
@@ -32,7 +32,7 @@ public class CauseServiceTests {
 	
 	@Test
 	@Transactional
-	public void shouldInsertCause() {
+	void shouldInsertCause() {
 		int found = causeService.findAll().size();
 		
 		Cause cause = new Cause();
@@ -44,7 +44,7 @@ public class CauseServiceTests {
 		
 		this.causeService.saveCause(cause);
 		assertThat(cause.getId()).isNotNull();
-		assertThat(causeService.findAll().size()).isEqualTo(found + 1);
+		assertThat(causeService.findAll()).hasSize(found + 1);
 	}
 	
 	@Test

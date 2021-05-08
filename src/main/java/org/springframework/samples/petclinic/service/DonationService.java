@@ -9,9 +9,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Cause;
 import org.springframework.samples.petclinic.model.Donation;
-import org.springframework.samples.petclinic.repository.CauseRepository;
 import org.springframework.samples.petclinic.repository.DonationRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +18,6 @@ public class DonationService {
 	
 	@Autowired
 	private DonationRepository donationRepository;
-	
-	@Autowired
-	private CauseRepository causeRepository;
-	
 	
 	@Transactional
 	public Collection<Donation> findAll() {

@@ -29,9 +29,9 @@
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="buscar dueï¿½os">
+					title="buscar dueños">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Buscar dueï¿½os</span>
+					<span>Buscar duenos</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
@@ -46,12 +46,6 @@
 					<span>Causas</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
-				</petclinic:menuItem>
-
 			</ul>
 
 
@@ -59,7 +53,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar sesiï¿½n</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar sesion</a></li>
 					<li><a href="<c:url value="/users/new" />">Registro</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
@@ -93,7 +87,7 @@
 											</sec:authorize>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Cerrar sesiï¿½n</a>
+													class="btn btn-primary btn-block btn-sm">Cerrar sesion</a>
 											</p>
 										</div>
 									</div>

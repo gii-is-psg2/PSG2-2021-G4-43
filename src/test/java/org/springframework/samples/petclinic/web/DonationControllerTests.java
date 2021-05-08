@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
 excludeAutoConfiguration= SecurityConfiguration.class)
 
-public class DonationControllerTests {
+class DonationControllerTests {
 	
 	private static final int TEST_DONATION_ID = 1;
 

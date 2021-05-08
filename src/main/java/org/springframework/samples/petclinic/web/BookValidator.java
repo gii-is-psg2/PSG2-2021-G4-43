@@ -19,25 +19,26 @@ public class BookValidator implements Validator {
 		LocalDate arrival = book.getArrivalDate();
 		Pet pet = book.getPet();
 		
-		// arrival date not null validation
 		if(arrival == null) {
 			errors.rejectValue("arrivalDate", REQUIRED, REQUIRED);
 		}
 
-		// departure date not null validation
 		if (departure==null) {
 			errors.rejectValue("departureDate", REQUIRED, REQUIRED);
 		}
 
-		// pet not null validation
 		if (pet == null) {
 			errors.rejectValue("pet", REQUIRED, REQUIRED);
 		}
 		
-		//arrival before departure validation
 		if(arrival!=null && departure!=null && !arrival.isBefore(departure)) {
-			errors.rejectValue("arrivalDate", "Horario inválido", "Horario inválido (la fecha de llegada tiene que ser anterior a la de salida)");
+			errors.rejectValue("departureDate", "Horario inválido", "Horario inválido (la fecha de llegada tiene que ser anterior a la de salida)");
 		}
+		
+		if(arrival!=null && !arrival.isBefore(LocalDate.now())) {
+			errors.rejectValue("arrivalDate", "Horario inválido", "Horario inválido (la fecha de llegada tiene que ser anterior a la actual)");
+		}
+		
 	}
 
 	@Override
