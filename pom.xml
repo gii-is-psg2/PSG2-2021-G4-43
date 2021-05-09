@@ -152,6 +152,10 @@
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
         </dependency>
+        <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
         <!-- Databases - Uses H2 by default -->
         <!-- dependency>
                 <groupId>org.hsqldb</groupId>
