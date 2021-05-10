@@ -52,6 +52,7 @@ In the retrospective meeting, the team has a discussion about those results.
 ## Sprint 4
 
 | Day           | JesusAparicioOrtiz    | manguecor  | Supremaciu     | fergongar1     | framurpri     | Nendanfito     |
+| ------------- | ------------- | -------------  | -------------  | -------------  | -------------  | -------------  |
 | 07/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
 | 08/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
 | 09/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
