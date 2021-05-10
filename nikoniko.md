@@ -47,3 +47,12 @@ In the retrospective meeting, the team has a discussion about those results.
 | 28/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :neutral_face: | :smiley:       |
 | 29/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
 | 30/04/2021    | :smiley:      | :smiley:       | :smiley:       |  :smiley:      | :smiley:       | :smiley:       |
+
+
+## Sprint 4
+
+| Day           | JesusAparicioOrtiz    | manguecor  | Supremaciu     | fergongar1     | framurpri     | Nendanfito     |
+| 07/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 08/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 09/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 10/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
