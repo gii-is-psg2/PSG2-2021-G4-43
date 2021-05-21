@@ -4,9 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="vets">
     <h2>Veterinarios</h2>
@@ -34,12 +32,10 @@
                     <c:if test="${vet.nrOfSpecialties == 0}">ninguna</c:if>
                 </td>
                 <td>
-                <sec:authorize access="hasAuthority('admin')">
-						<spring:url value="/vets/{vetId}" var="VetUrl">
-        					<spring:param name="vetId" value="${vet.id}"/>
-    					</spring:url>
-    					<a href="${fn:escapeXml(VetUrl)}" class="btn btn-default">Más Detalles</a>
-		 		</sec:authorize>
+					<spring:url value="/vets/{vetId}" var="VetUrl">
+        				<spring:param name="vetId" value="${vet.id}"/>
+    				</spring:url>
+    				<a href="${fn:escapeXml(VetUrl)}" class="btn btn-default">Más Detalles</a>
 		 		</td>
             </tr>
         </c:forEach>
