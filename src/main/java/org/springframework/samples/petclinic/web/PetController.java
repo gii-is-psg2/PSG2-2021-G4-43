@@ -32,6 +32,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PetService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author Juergen Hoeller
@@ -43,6 +44,8 @@ import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNam
 public class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
+	
+	private static final String VIEWS_OWNER_DETAILS = "owners/ownerDetails";
 
 	private final PetService petService;
         private final OwnerService ownerService;
@@ -89,13 +92,19 @@ public class PetController {
 		}
 		else {
                     try{
-                    	owner.addPet(pet);
-                    	this.petService.savePet(pet);
+                    	if(ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId().equals(owner.getId())) {
+                    		owner.addPet(pet);
+                        	this.petService.savePet(pet);
+            				model.addAttribute("message", "MASCOTA CREADA CON EXITO");
+            				return "redirect:/owners/{ownerId}";
+                    	}
+                    	model.addAttribute("message", "NO TIENE PERMISOS PARA CREAR UNA MASCOTA PARA ESTE OWNER");
+            			return VIEWS_OWNER_DETAILS;
                     }catch(DuplicatedPetNameException ex){
                         result.rejectValue("name", "duplicate", "ya existe");
                         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
                     }
-                    return "redirect:/owners/{ownerId}";
+                    
 		}
 	}
 
