@@ -18,7 +18,7 @@
             <th>Presupuesto objetivo</th>
             <th>Meta alcanzada</th>
             <th>Detalles</th>
-            <th>Donacion</th>
+            <th>Donaci&oacute;n</th>
 
         </tr>
         </thead>
@@ -43,17 +43,17 @@
 					<spring:url value="/causes/{causeId}" var="CauseDetailsUrl">
        					<spring:param name="causeId" value="${cause.id}"/>
    					</spring:url>
-   					<a href="${fn:escapeXml(CauseDetailsUrl)}" class="btn btn-default">Mas Detalles</a>
+   					<a href="${fn:escapeXml(CauseDetailsUrl)}" class="btn btn-default">M&aacute;s Detalles</a>
 		 		</td>
                  <td>
                 	<spring:url value="/causes/{causeId}/donations/new" var="createDonationUrl">
        					<spring:param name="causeId" value="${cause.id}"/>
    					</spring:url>
-   					<a href="${fn:escapeXml(createDonationUrl)}" class="btn btn-default">Realizar donacion</a>  
+   					<a href="${fn:escapeXml(createDonationUrl)}" class="btn btn-default">Realizar donaci&oacute;n</a>  
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href='<spring:url value="/causes/new" htmlEscape="true"/>'>Añadir causa</a>
+    <a class="btn btn-default" href='<spring:url value="/causes/new" htmlEscape="true"/>'>A&ntilde;adir causa</a>
 </petclinic:layout>
