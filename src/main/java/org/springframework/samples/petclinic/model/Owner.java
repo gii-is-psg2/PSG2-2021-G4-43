@@ -30,6 +30,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -58,7 +59,7 @@ public class Owner extends Person {
 
 	@Column(name = "telephone")
 	@NotEmpty
-	@Digits(fraction = 0, integer = 10)
+	@Pattern(regexp = "[678]\\d{8}$", message = "Intrudzca un teléfono de 9 dígitos y que empiece por {6,7 u 8}")
 	private String telephone;
 
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "owner")
