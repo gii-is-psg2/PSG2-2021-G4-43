@@ -11,5 +11,8 @@
             <spring:url value="/resources/images/fainting_goat.png" htmlEscape="true" var="petsImage"/>
             <img class="img-responsive" src="${petsImage}"/>
         </div>
+    <div id="mensajeInformativo">
+    * Las cabras que aparecen en la imagen son especialistas contratadas y no han sufrido ningun tipo de dolor.
+    </div>
     </div>
 </petclinic:layout>
