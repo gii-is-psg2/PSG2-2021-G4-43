@@ -85,27 +85,32 @@ public class PetController {
 	}
 
 	@PostMapping(value = "/pets/new")
-	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {		
-		if (result.hasErrors()) {
-			model.put("pet", pet);
+	public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {	
+		try {
+			if (result.hasErrors()) {
+				return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+			}
+			else {
+	                    try{
+	                    	if(ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId().equals(owner.getId())) {
+	                    		owner.addPet(pet);
+	                        	this.petService.savePet(pet);
+	            				model.addAttribute("message", "MASCOTA CREADA CON EXITO");
+	            				return "redirect:/owners/{ownerId}";
+	                    	}
+	                    	model.addAttribute("message", "NO TIENE PERMISOS PARA CREAR UNA MASCOTA PARA ESTE OWNER");
+	            			return VIEWS_OWNER_DETAILS;
+	                    }catch(DuplicatedPetNameException ex){
+	                        result.rejectValue("name", "duplicate", "ya existe");
+	                        return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
+	                    }
+ 
+			}
+		}catch(Exception ex){
+			model.put("message", "LA FECHA DE NACIMIENTO DE LA MASCOTA DEBE SER ANTERIOR A LA FECHA ACTUAL");
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		}
-		else {
-                    try{
-                    	if(ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId().equals(owner.getId())) {
-                    		owner.addPet(pet);
-                        	this.petService.savePet(pet);
-            				model.addAttribute("message", "MASCOTA CREADA CON EXITO");
-            				return "redirect:/owners/{ownerId}";
-                    	}
-                    	model.addAttribute("message", "NO TIENE PERMISOS PARA CREAR UNA MASCOTA PARA ESTE OWNER");
-            			return VIEWS_OWNER_DETAILS;
-                    }catch(DuplicatedPetNameException ex){
-                        result.rejectValue("name", "duplicate", "ya existe");
-                        return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
-                    }
-                    
-		}
+ 
 	}
 
 	@GetMapping(value = "/pets/{petId}/edit")

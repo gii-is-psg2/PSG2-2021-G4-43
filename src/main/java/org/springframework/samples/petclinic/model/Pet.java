@@ -27,6 +27,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Past;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import java.util.Set;
 public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")
+	@Past(message="La fecha de nacimiento debe ser anterior a la de hoy")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate birthDate;
 
