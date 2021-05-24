@@ -25,8 +25,10 @@ import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -129,11 +131,15 @@ public class OwnerController {
 	}
 	
 	@GetMapping("/owners/{ownerId}/delete")
-	public String deleteOwner(@PathVariable("ownerId") int ownerId, Model model){
+	public String deleteOwner(@PathVariable("ownerId") int ownerId, ModelMap model){
 			Owner owner = ownerService.findOwnerById(ownerId);
-			ownerService.deleteOwner(owner);
-			model.addAttribute("message", "OWNER BORRADO CON EXITO");
-			return "redirect:/owners/find";
+			if(ownerService.findOwner(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId().equals(owner.getId())) {
+				ownerService.deleteOwner(owner);
+				model.addAttribute("message", "OWNER BORRADO CON EXITO");
+				return "redirect:/owners/find";
+			}
+			model.addAttribute("message", "NO TIENE PERMISOS PARA BORRAR ESTE OWNER");
+			return initFindForm(model);
 	}
 
 	/**

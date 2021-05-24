@@ -49,7 +49,9 @@
                 	<spring:url value="/causes/{causeId}/donations/new" var="createDonationUrl">
        					<spring:param name="causeId" value="${cause.id}"/>
    					</spring:url>
-   					<a href="${fn:escapeXml(createDonationUrl)}" class="btn btn-default">Realizar donaci&oacute;n</a>  
+
+   					<a href="${fn:escapeXml(createDonationUrl)}" class="btn btn-default" style="background-color: #CBA53B; border-color: #F5C848">Realizar donacion</a>  
+
                 </td>
             </tr>
         </c:forEach>

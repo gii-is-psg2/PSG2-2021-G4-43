@@ -101,8 +101,8 @@ public class CauseController {
         return createDonationUrl;
     }
 
-    @PostMapping(value = "/{id}/donations/new")
-    public String processCreationForm(@PathVariable("id") int id,@Valid Donation donation, BindingResult result,ModelMap model) throws Exception {
+    @PostMapping(value = "/{value}/donations/new")
+    public String processCreationForm(@PathVariable("value") int id,@Valid Donation donation, BindingResult result,ModelMap model) throws Exception {
         if (result.hasErrors()) {
             return createDonationUrl;
         }
