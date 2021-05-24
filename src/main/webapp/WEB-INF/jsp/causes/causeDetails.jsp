@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="causes">
 
-    <h2>Informaci�n de la cause</h2>
+    <h2>Informaci&oacute;n de la causa</h2>
 
 
     <table class="table table-striped">
@@ -53,7 +53,7 @@
 	<div class="col-lg-8">
 		<spring:url value="/causes" var="back">
                 	</spring:url>
-    	<a href="${fn:escapeXml(back)}" class="btn btn-default">Atras</a>
+    	<a href="${fn:escapeXml(back)}" class="btn btn-default">Atr&aacute;s</a>
 	</div>
 	
 </petclinic:layout>

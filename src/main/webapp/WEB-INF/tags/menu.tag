@@ -29,9 +29,9 @@
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="buscar dueños">
+					title="Buscar dueÃ±os">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Buscar duenos</span>
+					<span>Buscar due&ntilde;o</span>
 				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
@@ -53,12 +53,12 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar sesion</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar Sesi&oacute;n</a></li>
 					<li><a href="<c:url value="/users/new" />">Registro</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>ï¿½
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
@@ -87,7 +87,7 @@
 											</sec:authorize>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Cerrar sesion</a>
+													class="btn btn-primary btn-block btn-sm">Cerrar Sesi&oacute;n</a>
 											</p>
 										</div>
 									</div>
