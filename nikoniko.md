@@ -68,3 +68,9 @@ In the retrospective meeting, the team has a discussion about those results.
 | 19/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
 | 20/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
 | 21/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 22/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 23/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 24/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 25/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 26/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
+| 27/05/2021    | :smiley:      | :smiley:       | :smiley:       | :smiley:       | :smiley:       | :smiley:       |
