@@ -1,25 +1,13 @@
 package org.springframework.samples.petclinic.web;
 
-import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Cause;
-import org.springframework.samples.petclinic.model.Donation;
-import org.springframework.samples.petclinic.service.CauseService;
-import org.springframework.samples.petclinic.service.DonationService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.samples.petclinic.model.SupportContact;
+import org.springframework.samples.petclinic.service.SupportService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -31,10 +19,10 @@ public class SupportController {
 	
 
 	@GetMapping()
-	public String listCauses(ModelMap model) {
-		Collection<Cause> causes = causeService.findAll();
-		model.addAttribute("causes",causes);
-		return "causes/causesList";
+	public String listSupportTeamInfo(ModelMap model) {
+		List<SupportContact> contacts = supportService.getSupportContacts();
+		model.addAttribute("contacts",contacts);
+		return "support/contactsList";
 	}
 
 }

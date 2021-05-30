@@ -10,30 +10,25 @@
     <table id="supportTable" class="table table-striped">
         <thead>
         <tr>
+            <th>Nombre</th>
             <th>Email</th>
-            <th>Fecha de inicio</th>
-            <th>Fecha de fin</th>
-            <th>Habitación</th>
+            <th>Telefono</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${books}" var="book">
+        <c:forEach items="${contacts}" var="contact">
             <tr>
                 <td>
-                    <c:out value="${book.pet.name}"/>
+                    <c:out value="${contact.name}"/>
                 </td>
                 <td>
-                    <c:out value="${book.arrivalDate}"/>
+                    <c:out value="${contact.email}"/>
                 </td>
                 <td>
-                    <c:out value="${book.departureDate}"/>
-                </td>
-                <td>
-                    <c:out value="${book.room.id}"/>
+                    <c:out value="${contact.phone}"/>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href='<spring:url value="/books/new" htmlEscape="true"/>'>Añadir reserva</a>
 </petclinic:layout>
